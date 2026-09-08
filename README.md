@@ -1,6 +1,6 @@
 # Muhammad Ahmed - Personal Portfolio
 
-Portfolio site for **Muhammad Ahmed**, an LLM Engineer and Software Developer. Content is taken from his CV, including the LinkedIn, GitHub, and project links embedded in the PDF.
+Portfolio site for **Muhammad Ahmed**, an LLM Engineer and Software Developer.
 
 Live: [https://muhammad-ahmed-phi.vercel.app](https://muhammad-ahmed-phi.vercel.app)
 
