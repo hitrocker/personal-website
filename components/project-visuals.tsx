@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { animate, motion, useInView, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState, type RefObject } from "react";
 
 type Dir = "left" | "right" | "up" | "down";
@@ -570,12 +570,49 @@ const ARROW_EMPTY = (() => {
   return cells;
 })();
 
-function ArrowShape({ piece }: { piece: ArrowPiece }) {
-  const points = piece.cells.map(([x, y]) => `${x + 0.5},${y + 0.5}`).join(" ");
-  const [hx, hy] = piece.cells[piece.cells.length - 1] ?? [0, 0];
-  const [dx, dy] = ARROW_STEP[arrowDir(piece)];
-  const cx = hx + 0.5;
-  const cy = hy + 0.5;
+type Pt = [number, number];
+
+const centerPoints = (piece: ArrowPiece): Pt[] => piece.cells.map(([x, y]) => [x + 0.5, y + 0.5]);
+
+function pathLength(points: Pt[]) {
+  let total = 0;
+  for (let i = 1; i < points.length; i += 1) {
+    const [ax, ay] = points[i - 1] ?? [0, 0];
+    const [bx, by] = points[i] ?? [0, 0];
+    total += Math.hypot(bx - ax, by - ay);
+  }
+  return total;
+}
+
+/** The part of a polyline between arc lengths `from` and `to`, keeping its corners. */
+function slicePath(points: Pt[], from: number, to: number): Pt[] {
+  const out: Pt[] = [];
+  let walked = 0;
+  for (let i = 1; i < points.length; i += 1) {
+    const [ax, ay] = points[i - 1] ?? [0, 0];
+    const [bx, by] = points[i] ?? [0, 0];
+    const seg = Math.hypot(bx - ax, by - ay);
+    const at = (d: number): Pt => {
+      const k = seg === 0 ? 0 : (d - walked) / seg;
+      return [ax + (bx - ax) * k, ay + (by - ay) * k];
+    };
+    if (walked + seg >= from && walked <= to) {
+      if (!out.length) out.push(at(Math.max(from, walked)));
+      if (walked + seg <= to) out.push([bx, by]);
+      else {
+        out.push(at(to));
+        break;
+      }
+    }
+    walked += seg;
+  }
+  return out;
+}
+
+function ArrowShape({ points: path, dir }: { points: Pt[]; dir: ArrowDir }) {
+  const points = path.map(([x, y]) => `${x},${y}`).join(" ");
+  const [cx, cy] = path[path.length - 1] ?? [0, 0];
+  const [dx, dy] = ARROW_STEP[dir];
   // Triangle head pointing in (dx, dy).
   const tip = [cx + dx * 0.34, cy + dy * 0.34];
   const left = [cx - dy * 0.22 - dx * 0.02, cy + dx * 0.22 - dy * 0.02];
@@ -592,6 +629,34 @@ function ArrowShape({ piece }: { piece: ArrowPiece }) {
       />
       <polygon points={`${tip.join(",")} ${left.join(",")} ${right.join(",")}`} fill="#E2609A" />
     </>
+  );
+}
+
+/** A tapped arrow crawls forward along its own body, through every turn, and off the board. */
+function SlidingArrow({ piece }: { piece: ArrowPiece }) {
+  const dir = arrowDir(piece);
+  const [dx, dy] = ARROW_STEP[dir];
+  const base = centerPoints(piece);
+  const length = pathLength(base);
+  const [hx, hy] = base[base.length - 1] ?? [0, 0];
+  const track: Pt[] = [...base, [hx + dx * 10, hy + dy * 10]];
+  const travel = 8;
+  const [offset, setOffset] = useState(0);
+
+  useEffect(() => {
+    const controls = animate(0, travel, {
+      duration: 0.4 + length * 0.07,
+      ease: [0.45, 0, 0.8, 0.5],
+      onUpdate: setOffset,
+    });
+    return () => controls.stop();
+  }, [length]);
+
+  const opacity = offset < 5 ? 1 : Math.max(0, 1 - (offset - 5) / (travel - 5));
+  return (
+    <g opacity={opacity}>
+      <ArrowShape points={slicePath(track, offset, offset + length)} dir={dir} />
+    </g>
   );
 }
 
@@ -656,29 +721,21 @@ export function ArrowPuzzleVisual() {
           <circle key={`${x}:${y}`} cx={x + 0.5} cy={y + 0.5} r={0.05} fill="#C9C1AC" />
         ))}
         <g key={cycle}>
-          {ARROW_PIECES.map((piece) => {
-            const gone = cleared.includes(piece.id);
-            const [dx, dy] = ARROW_STEP[arrowDir(piece)];
-            return (
+          {ARROW_PIECES.map((piece) =>
+            cleared.includes(piece.id) ? (
+              <SlidingArrow key={piece.id} piece={piece} />
+            ) : (
               <motion.g
                 key={piece.id}
                 initial={reduce ? false : { opacity: 0, scale: 0.9 }}
-                animate={
-                  gone
-                    ? { x: dx * 8, y: dy * 8, opacity: 0 }
-                    : { x: 0, y: 0, opacity: 1, scale: 1 }
-                }
-                transition={
-                  gone
-                    ? { duration: 0.5, ease: [0.55, 0, 0.9, 0.4] }
-                    : { duration: 0.35, ease: "easeOut" }
-                }
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
                 style={{ transformBox: "fill-box", transformOrigin: "center" }}
               >
-                <ArrowShape piece={piece} />
+                <ArrowShape points={centerPoints(piece)} dir={arrowDir(piece)} />
               </motion.g>
-            );
-          })}
+            ),
+          )}
         </g>
         {tappedHead ? (
           <motion.circle
@@ -746,10 +803,6 @@ function hopScene(time: number, followY: number) {
     if (x > HOP.size + 4) break;
     pipes.push({ x, gapY: HOP.gaps[i % HOP.gaps.length] ?? 70 });
   }
-  const passed = Math.max(
-    0,
-    Math.floor((scroll + HOP.birdX - HOP.firstPipe - HOP.pipeW) / HOP.spacing) + 1,
-  );
   // Aim for the gap the bird is in until it is fully past that pipe, then the next one.
   const next = Math.max(
     0,
@@ -759,7 +812,7 @@ function hopScene(time: number, followY: number) {
   const phase = (time % HOP.hopPeriod) / HOP.hopPeriod;
   const arc = -HOP.hopHeight * 4 * phase * (1 - phase);
   const rising = phase < 0.5;
-  return { pipes, passed, target, birdY: followY + arc, rising, scroll };
+  return { pipes, target, birdY: followY + arc, rising, scroll };
 }
 
 export function SkyHopperVisual() {
@@ -878,20 +931,6 @@ export function SkyHopperVisual() {
           <rect x={2} y={2} width={3} height={2} fill="#FF9A8C" />
         </g>
 
-        <text
-          x={HOP.size / 2}
-          y={24}
-          textAnchor="middle"
-          fontFamily="var(--font-display), sans-serif"
-          fontWeight={800}
-          fontSize={16}
-          fill="#FFFFFF"
-          stroke="#202830"
-          strokeWidth={2.4}
-          paintOrder="stroke"
-        >
-          {reduce ? 3 : scene.passed}
-        </text>
       </svg>
     </div>
   );
