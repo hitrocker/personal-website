@@ -178,35 +178,6 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    id: "2048",
-    name: "2048",
-    kind: "Android game",
-    role: "Solo developer · shipped",
-    visual: "grid2048",
-    summary:
-      "A complete 2048 built independently in Kotlin and Jetpack Compose - custom engine, multiple boards, and a signed release on Google Play.",
-    highlights: [
-      "Custom game engine with 8 grid sizes, covered by 24 JUnit tests.",
-      "Gesture controls and stable animations; DataStore keeps settings and high scores on device.",
-      "Firebase Auth wired to realtime Cloud Firestore leaderboards, with no ad frameworks.",
-      "Published as a fully compliant, signed AAB on Google Play.",
-    ],
-    stack: [
-      "Kotlin",
-      "Jetpack Compose",
-      "MVVM",
-      "StateFlow",
-      "DataStore",
-      "Firebase Auth",
-      "Cloud Firestore",
-      "JUnit",
-    ],
-    links: [
-      { label: "GitHub", href: "https://github.com/hitrocker/Game2048" },
-      { label: "Google Play", href: "" },
-    ],
-  },
-  {
     id: "paintmaze",
     name: "PaintMaze",
     kind: "Unity mobile puzzle",
@@ -293,6 +264,35 @@ export const projects: Project[] = [
         label: "Play Store",
         href: "https://play.google.com/store/apps/details?id=com.hitrocker.skyhopper",
       },
+    ],
+  },
+  {
+    id: "2048",
+    name: "2048",
+    kind: "Android game",
+    role: "Solo developer · shipped",
+    visual: "grid2048",
+    summary:
+      "A complete 2048 built independently in Kotlin and Jetpack Compose - custom engine, multiple boards, and a signed release on Google Play.",
+    highlights: [
+      "Custom game engine with 8 grid sizes, covered by 24 JUnit tests.",
+      "Gesture controls and stable animations; DataStore keeps settings and high scores on device.",
+      "Firebase Auth wired to realtime Cloud Firestore leaderboards, with no ad frameworks.",
+      "Published as a fully compliant, signed AAB on Google Play.",
+    ],
+    stack: [
+      "Kotlin",
+      "Jetpack Compose",
+      "MVVM",
+      "StateFlow",
+      "DataStore",
+      "Firebase Auth",
+      "Cloud Firestore",
+      "JUnit",
+    ],
+    links: [
+      { label: "GitHub", href: "https://github.com/hitrocker/Game2048" },
+      { label: "Google Play", href: "" },
     ],
   },
 ];
