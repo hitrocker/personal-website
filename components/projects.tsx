@@ -30,17 +30,17 @@ export function Projects() {
           <Reveal key={project.id} delay={index * 0.04}>
             <article className="card overflow-hidden p-6 sm:p-7 lg:p-8">
               <div
-                className={`grid items-center gap-6 lg:gap-10 ${
+                className={`grid grid-cols-[minmax(0,1fr)] items-center gap-6 lg:gap-10 ${
                   index % 2 === 1
                     ? "lg:grid-cols-[auto_minmax(0,1fr)]"
                     : "lg:grid-cols-[minmax(0,1fr)_auto]"
                 }`}
               >
-                <div className={index % 2 === 1 ? "lg:order-2" : ""}>
+                <div className={`min-w-0 ${index % 2 === 1 ? "lg:order-2" : ""}`}>
                   <p className="font-mono text-xs tracking-[0.14em] text-muted uppercase">
                     {project.kind} · {project.role}
                   </p>
-                  <h3 className="display mt-2 text-[2.6rem] tracking-[-0.05em]">
+                  <h3 className="display mt-2 text-[clamp(2rem,10vw,2.6rem)] tracking-[-0.05em] break-words">
                     {project.name}
                   </h3>
                   <p className="mt-4 max-w-xl text-[15px] leading-7 text-muted">
@@ -68,7 +68,7 @@ export function Projects() {
                   </div>
                 </div>
                 <div
-                  className={`flex w-full justify-center lg:w-[28rem] ${
+                  className={`flex w-full min-w-0 justify-center lg:w-[28rem] ${
                     index % 2 === 1 ? "lg:order-1" : ""
                   }`}
                 >
