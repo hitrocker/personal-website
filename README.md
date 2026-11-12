@@ -33,12 +33,17 @@ cp .env.example .env.local
 
 Then edit `NEXT_PUBLIC_SITE_URL`.
 
+## Contact form
+
+The contact form sends through [Web3Forms](https://web3forms.com). Get a free access key for your inbox there, then set it as `NEXT_PUBLIC_WEB3FORMS_KEY` in `.env.local` and in Vercel (Project → Settings → Environment Variables). Without a key, the form falls back to opening the visitor's mail app.
+
 ## Deploy on Vercel
 
 1. Push this repository to GitHub.
 2. Import the project in Vercel.
 3. Add `hitrocker.dev` under Project → Settings → Domains and point its DNS at Vercel.
-4. Deploy.
+4. Add `NEXT_PUBLIC_WEB3FORMS_KEY` under Project → Settings → Environment Variables.
+5. Deploy.
 
 ## Scripts
 
