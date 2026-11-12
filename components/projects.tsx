@@ -37,7 +37,7 @@ export function Projects() {
                 }`}
               >
                 <div className={index % 2 === 1 ? "lg:order-2" : ""}>
-                  <p className="font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
+                  <p className="font-mono text-xs tracking-[0.14em] text-muted uppercase">
                     {project.kind} · {project.role}
                   </p>
                   <h3 className="display mt-2 text-[2.6rem] tracking-[-0.05em]">
