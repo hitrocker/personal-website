@@ -37,6 +37,10 @@ Then edit `NEXT_PUBLIC_SITE_URL`.
 
 The contact form sends through [Web3Forms](https://web3forms.com). Get a free access key for your inbox there, then set it as `NEXT_PUBLIC_WEB3FORMS_KEY` in `.env.local` and in Vercel (Project → Settings → Environment Variables). Without a key, the form falls back to opening the visitor's mail app.
 
+## CV
+
+The downloadable résumé (`public/Muhammad_Ahmed_CV.pdf`) is generated from `cv/resume.html`. Edit the HTML, then run `npm run cv` (needs Google Chrome; it fails if the PDF grows past one page).
+
 ## Deploy on Vercel
 
 1. Push this repository to GitHub.
