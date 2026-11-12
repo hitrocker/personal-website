@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VanceOS v4.0 — Principal Systems Craftsman &amp; Vintage Workstation</title>
+<!-- Retro Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;family=VT323&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "primary": "#006565",
+          "primary-container": "#008080",
+          "on-primary": "#ffffff",
+          "secondary": "#5a5f62",
+          "surface": "#dfd8c8",
+          "surface-container": "#d4ccba",
+          "surface-container-low": "#ede6d6",
+          "surface-container-lowest": "#ffffff",
+          "surface-container-high": "#c8bfae",
+          "surface-container-highest": "#bcaf9e",
+          "on-surface": "#1e1c12",
+          "on-surface-variant": "#3e4949",
+          "outline": "#7a766c",
+          "outline-variant": "#b5ad9e",
+          "win-blue": "#000080",
+          "win-cyan": "#008080",
+          "win-gray": "#c0c0c0",
+          "win-darkgray": "#808080",
+          "win-light": "#ffffff",
+          "win-black": "#000000",
+          "crt-green": "#33ff33",
+          "crt-amber": "#ffb000"
+        },
+        "fontFamily": {
+          "code": ["Space Mono", "Courier Prime", "monospace"],
+          "terminal": ["VT323", "Courier Prime", "monospace"],
+          "retro": ["Courier Prime", "monospace"],
+          "ui": ["Space Grotesk", "sans-serif"]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  /* Classic 90s OS 3D Bevel and Desktop Styles */
+  body {
+    background-color: #008080; /* Iconic Classic Teal Desktop */
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 16px 16px;
+    font-family: 'Space Mono', 'Courier Prime', monospace;
+  }
+
+  /* 3D Window & Button Borders (Classic Raised / Sunken) */
+  .win-box {
+    background-color: #c0c0c0;
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    border-right: 2px solid #404040;
+    border-bottom: 2px solid #404040;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.35);
+  }
+
+  .win-sunken {
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+  }
+
+  .win-btn {
+    background-color: #c0c0c0;
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    border-right: 2px solid #404040;
+    border-bottom: 2px solid #404040;
+    box-shadow: 1px 1px 0px #000000;
+  }
+  .win-btn:active {
+    border-top: 2px solid #404040;
+    border-left: 2px solid #404040;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    transform: translate(1px, 1px);
+  }
+
+  .win-titlebar {
+    background: linear-gradient(90deg, #000080, #1084d0);
+    color: #ffffff;
+  }
+  .win-titlebar-teal {
+    background: linear-gradient(90deg, #006565, #00a8a8);
+    color: #ffffff;
+  }
+  .win-titlebar-olive {
+    background: linear-gradient(90deg, #505c2e, #86994e);
+    color: #ffffff;
+  }
+
+  /* CRT Terminal Monitor Effect */
+  .crt-screen {
+    background-color: #0c140c;
+    box-shadow: inset 0 0 18px rgba(0, 255, 0, 0.2);
+    position: relative;
+  }
+  .crt-screen::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+    background-size: 100% 4px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  @keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+  .animate-cursor {
+    animation: blink 1s infinite;
+  }
+
+  .dither-portrait {
+    filter: contrast(135%) brightness(95%) grayscale(100%);
+  }
+</style>
+</head>
+<body class="text-win-black font-code text-xs sm:text-sm antialiased pb-16 selection:bg-win-blue selection:text-white">
+<!-- ========================================================================= -->
+<!-- 1. VINTAGE OS TOP SYSTEM MENU BAR                                         -->
+<!-- ========================================================================= -->
+<header class="bg-[#c0c0c0] border-b-2 border-[#808080] fixed top-0 left-0 right-0 z-50 shadow-sm text-black select-none">
+<div class="max-w-7xl mx-auto px-2 flex items-center justify-between h-7 text-xs font-retro">
+<!-- OS Logo & Classic Dropdown Menus -->
+<div class="flex items-center gap-1 sm:gap-2">
+<!-- Retro Computer Icon -->
+<a class="flex items-center gap-1 px-1.5 py-0.5 hover:bg-win-blue hover:text-white font-bold win-sunken bg-[#e0e0e0]" href="#hero">
+<span class="material-symbols-outlined text-sm" data-icon="computer">computer</span>
+<span class="tracking-tight">SYS//VANCE</span>
+</a>
+<!-- Dropdown Labels -->
+<nav class="flex items-center">
+<a class="px-2 py-0.5 hover:bg-win-blue hover:text-white cursor-pointer" href="#hero">[File]</a>
+<a class="px-2 py-0.5 hover:bg-win-blue hover:text-white cursor-pointer" href="#vitals">[Diagnostics]</a>
+<a class="px-2 py-0.5 hover:bg-win-blue hover:text-white cursor-pointer" href="#projects">[Artifacts]</a>
+<a class="px-2 py-0.5 hover:bg-win-blue hover:text-white cursor-pointer" href="#stack">[Tech.dbf]</a>
+<a class="px-2 py-0.5 hover:bg-win-blue hover:text-white cursor-pointer" href="#console">[MS-DOS]</a>
+</nav>
+</div>
+<!-- Retro System Info Tray / Quick Dial -->
+<div class="flex items-center gap-2 text-[11px]">
+<div class="hidden md:flex items-center gap-1 win-sunken px-2 py-0.5 bg-[#dfdfdf]">
+<span class="inline-block w-2 h-2 bg-[#008000] border border-black"></span>
+<span>IRQ: 05 [NOMINAL]</span>
+</div>
+<div class="win-sunken px-2 py-0.5 bg-[#dfdfdf] flex items-center gap-1 font-bold">
+<span class="material-symbols-outlined text-[13px]" data-icon="memory">memory</span>
+<span>640K OK</span>
+</div>
+<a class="win-btn px-2 py-0.5 font-bold flex items-center gap-1 text-[11px] hover:bg-[#d0d0d0]" href="#console">
+<span class="material-symbols-outlined text-xs" data-icon="terminal">terminal</span>
+<span>RUN CMD</span>
+</a>
+</div>
+</div>
+</header>
+<div class="h-9"></div>
+<!-- ========================================================================= -->
+<!-- 2. DESKTOP WORKSPACE / HERO: about_kaelen.exe WINDOW                      -->
+<!-- ========================================================================= -->
+<main class="max-w-7xl mx-auto px-3 sm:px-4 py-4 space-y-6">
+<!-- Desktop Icon Toolbar Strip -->
+<div class="flex flex-wrap items-center justify-between text-xs text-white pb-1 pt-1 gap-2 font-retro">
+<div class="flex items-center gap-3">
+<span class="bg-[#000000]/40 px-2 py-0.5 rounded border border-white/20">C:\PORTFOLIO\ABOUT_KAELEN.EXE</span>
+<span class="hidden sm:inline bg-[#000000]/40 px-2 py-0.5 rounded border border-white/20">CPU: PENTIUM 133MHz OVERDRIVE</span>
+</div>
+<div class="bg-[#000000]/40 px-2 py-0.5 rounded border border-white/20 text-[#a3ffff]">
+      STATION: [37.7749° N, 122.4194° W] // ZERO-TRUST KERNEL
+    </div>
+</div>
+<!-- MAIN OPERATOR WINDOW -->
+<section class="win-box p-1" id="hero">
+<!-- Classic Window Title Bar -->
+<div class="win-titlebar px-2 py-1 flex items-center justify-between font-bold text-xs select-none">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm" data-icon="account_circle">account_circle</span>
+<span>C:\SYS\WORKSTATION\PROFILE - Kaelen Vance (Principal Systems Craftsman)</span>
+</div>
+<!-- Retro Window Control Buttons: Min, Max, Close -->
+<div class="flex items-center gap-1 text-black font-mono">
+<button class="win-btn w-4 h-4 flex items-center justify-center text-[10px] leading-none font-bold" title="Minimize">_</button>
+<button class="win-btn w-4 h-4 flex items-center justify-center text-[10px] leading-none font-bold" title="Maximize">■</button>
+<button class="win-btn w-4 h-4 flex items-center justify-center text-[10px] leading-none font-bold" title="Close">×</button>
+</div>
+</div>
+<!-- Window Sub-Menu Strip -->
+<div class="bg-[#c0c0c0] border-b border-[#808080] px-2 py-1 text-[11px] flex gap-3 text-black font-retro">
+<span class="hover:underline cursor-pointer">File</span>
+<span class="hover:underline cursor-pointer">Edit</span>
+<span class="hover:underline cursor-pointer">View</span>
+<span class="hover:underline cursor-pointer">Options</span>
+<span class="hover:underline cursor-pointer">Help</span>
+</div>
+<!-- Window Canvas (Warm Parchment / Desktop Ivory) -->
+<div class="bg-[#f5eedc] border border-[#808080] p-4 sm:p-6 text-black">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- Left Profile Details -->
+<div class="lg:col-span-7 space-y-4">
+<!-- Retro Badge & Status Pill -->
+<div class="flex flex-wrap gap-2 text-xs">
+<span class="win-sunken px-2 py-1 bg-[#eae0cb] text-[#006565] font-bold flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-[#008000] inline-block"></span>
+              STATUS: READY FOR CONTRACT DISPATCH
+            </span>
+<span class="win-sunken px-2 py-1 bg-[#eae0cb] text-[#333]">
+              KERNEL: 6.8.0-RT PREEMPT_RT
+            </span>
+<span class="win-sunken px-2 py-1 bg-[#eae0cb] text-[#555]">
+              SAN FRANCISCO // PST
+            </span>
+</div>
+<!-- Hero Headline in Retro Typography -->
+<div>
+<div class="text-[11px] font-bold text-[#006565] tracking-widest uppercase mb-1">
+              // OPERATOR DOSSIER: KAELEN VANCE [SYS//VANCE]
+            </div>
+<h1 class="text-2xl sm:text-4xl font-bold font-retro tracking-tight text-[#111] leading-tight">
+              PRINCIPAL <span class="bg-[#008080] text-white px-1.5 py-0.5">SYSTEMS</span> &amp; AI ARCHITECT
+            </h1>
+<div class="text-xs text-[#555] font-retro mt-1">
+              Serving robust microsecond low-latency systems &amp; neural compilers since 1994.
+            </div>
+</div>
+<!-- Description / Bio -->
+<div class="win-sunken bg-white p-3 text-xs sm:text-sm text-[#222] font-mono leading-relaxed border-l-4 border-l-[#008080]">
+            Forging mission-critical distributed consensus engines, neural compiler toolchains, and formally verified low-latency systems. Specializing in high-throughput data planes where microsecond predictability is non-negotiable.
+          </div>
+<!-- Vintage Action Buttons -->
+<div class="flex flex-wrap gap-3 pt-2">
+<a class="win-btn px-4 py-2 font-bold flex items-center gap-2 text-xs bg-[#c0c0c0] hover:bg-[#d4d4d4] active:bg-[#a0a0a0]" href="#console">
+<span class="material-symbols-outlined text-sm font-bold" data-icon="terminal">terminal</span>
+<span>[RUN RESUME_DECRYPT.BAT]</span>
+</a>
+<a class="win-btn px-4 py-2 font-bold flex items-center gap-2 text-xs bg-[#c0c0c0] hover:bg-[#d4d4d4]" href="#projects">
+<span class="material-symbols-outlined text-sm" data-icon="folder">folder</span>
+<span>[BROWSE ARTIFACTS.DIR]</span>
+</a>
+<a class="win-btn px-3 py-2 font-bold flex items-center gap-1.5 text-xs text-[#000080] bg-[#c0c0c0]" href="#console">
+<span class="material-symbols-outlined text-sm" data-icon="send">send</span>
+<span>[TELEGRAM / PING]</span>
+</a>
+</div>
+<!-- Hardware Spec Table -->
+<div class="win-sunken bg-[#e9e0cf] p-2 grid grid-cols-3 gap-2 text-[11px] font-retro">
+<div>
+<div class="text-[#666]">SYSTEM LOAD</div>
+<div class="font-bold text-[#006565]">0.14 [NOMINAL]</div>
+</div>
+<div>
+<div class="text-[#666]">CIPHER SUITE</div>
+<div class="font-bold text-[#000080]">ED25519-KYBER</div>
+</div>
+<div>
+<div class="text-[#666]">SECURITY LEVEL</div>
+<div class="font-bold text-[#7a0000]">LEVEL-5 ROOT</div>
+</div>
+</div>
+</div>
+<!-- Right Diagnostic / Hardware Biometric Box -->
+<div class="lg:col-span-5">
+<div class="win-box p-1 bg-[#c0c0c0]">
+<!-- Sub window title -->
+<div class="win-titlebar-teal px-2 py-0.5 text-[11px] font-bold flex justify-between items-center text-white">
+<span>SYSINFO.EXE — BIO &amp; RADAR MONITOR</span>
+<span class="font-mono text-[9px] bg-black/30 px-1">REFRESH: 60Hz</span>
+</div>
+<!-- Content Container -->
+<div class="p-3 bg-[#e8dec9] space-y-3">
+<!-- Pixel Portrait / Dithered Scan -->
+<div class="win-sunken bg-black p-2 flex flex-col items-center justify-center relative overflow-hidden">
+<div class="w-32 h-32 border-2 border-[#008080] relative bg-[#111] overflow-hidden">
+<img class="w-full h-full object-cover dither-portrait" data-alt="Futuristic cyber-noir diagnostic portrait of a male systems engineer with tactical HUD data overlays, sharp jawline, volumetric cyan backlight, subtle cybernetic sensory nodes, moody high-contrast lighting in a midnight command center." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzhq4baI4F1ntyGk1-rF8BfTWS04_NQeYS65u_6KW3A4vKIveIQAIWrfQkg6qvSwTpQBMyfobXGBCnhcfAzX7qMzMriYjFUTet5GjHF34RpCZ_mPOMMWxOPtkMwcwqLBZgMJ9Rfesltuka8bw8Nz6sAD6R0Ilz-2BBOCajOeAqos-cRqwKgylpvto_uXqyZActtk7NbPnqvIcgCrbC_9KOgoaudNDjtwzDaUOxLC4b"/>
+<div class="absolute bottom-0 left-0 right-0 bg-[#008080]/90 text-white font-mono text-[9px] text-center py-0.5">
+                    UID: 0x7F9A // 256-BIT
+                  </div>
+</div>
+<div class="text-[#33ff33] font-mono text-[10px] mt-1 tracking-wider text-center">
+                  OPERATOR: KAELEN VANCE [VERIFIED]
+                </div>
+<div class="text-[#888] font-mono text-[9px]">
+                  SOCKET: ESTABLISHED // TX: 4.8 GB/s
+                </div>
+</div>
+<!-- Retro BIOS Style Progress Bars -->
+<div class="space-y-2 text-[11px] font-retro">
+<div>
+<div class="flex justify-between mb-0.5">
+<span>NEURAL COMPILATION</span>
+<span class="font-bold text-[#006565]">99.4%</span>
+</div>
+<!-- Beveled Stepped Progress Bar -->
+<div class="win-sunken h-3.5 bg-white p-0.5 flex gap-0.5">
+<div class="h-full bg-[#000080] w-[10%]"></div>
+<div class="h-full bg-[#000080] w-[10%]"></div>
+<div class="h-full bg-[#000080] w-[10%]"></div>
+<div class="h-full bg-[#000080] w-[10%]"></div>
+<div class="h-full bg-[#000080] w-[10%]"></div>
+<div class="h-full bg-[#000080] w-[10%]"></div>
+<div class="h-full bg-[#000080] w-[10%]"></div>
+<div class="h-full bg-[#000080] w-[10%]"></div>
+<div class="h-full bg-[#000080] w-[10%]"></div>
+<div class="h-full bg-[#000080] w-[9.4%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-0.5">
+<span>INTER-CLUSTER LATENCY</span>
+<span class="font-bold text-[#553300]">1.2ms [ZERO-JITTER]</span>
+</div>
+<div class="win-sunken h-3.5 bg-white p-0.5 flex gap-0.5">
+<div class="h-full bg-[#008080] w-[10%]"></div>
+<div class="h-full bg-[#008080] w-[10%]"></div>
+<div class="h-full bg-[#008080] w-[10%]"></div>
+<div class="h-full bg-[#008080] w-[10%]"></div>
+<div class="h-full bg-[#008080] w-[10%]"></div>
+<div class="h-full bg-[#008080] w-[10%]"></div>
+<div class="h-full bg-[#008080] w-[10%]"></div>
+<div class="h-full bg-[#008080] w-[10%]"></div>
+<div class="h-full bg-[#008080] w-[10%]"></div>
+<div class="h-full bg-[#c0c0c0] w-[10%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-0.5">
+<span>COMMITS ARCHIVED</span>
+<span class="font-bold">3,842 PATCHES</span>
+</div>
+<div class="win-sunken h-3.5 bg-white p-0.5 flex gap-0.5">
+<div class="h-full bg-[#505c2e] w-[10%]"></div>
+<div class="h-full bg-[#505c2e] w-[10%]"></div>
+<div class="h-full bg-[#505c2e] w-[10%]"></div>
+<div class="h-full bg-[#505c2e] w-[10%]"></div>
+<div class="h-full bg-[#505c2e] w-[10%]"></div>
+<div class="h-full bg-[#505c2e] w-[10%]"></div>
+<div class="h-full bg-[#505c2e] w-[10%]"></div>
+<div class="h-full bg-[#505c2e] w-[10%]"></div>
+<div class="h-full bg-[#c0c0c0] w-[10%]"></div>
+<div class="h-full bg-[#c0c0c0] w-[10%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- 3. RETRO SYSTEM TELEMETRY / HARDWARE BENCHMARKS                           -->
+<!-- ========================================================================= -->
+<section class="win-box p-1" id="vitals">
+<div class="win-titlebar px-2 py-1 flex items-center justify-between font-bold text-xs select-none">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm" data-icon="monitor_heart">monitor_heart</span>
+<span>PERFMON.EXE — Live Telemetry &amp; System Gauges</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-[10px] bg-white/20 px-1">BUS: SCSI-3 WIDE</span>
+<button class="win-btn w-4 h-4 flex items-center justify-center text-[10px] text-black">_</button>
+<button class="win-btn w-4 h-4 flex items-center justify-center text-[10px] text-black">■</button>
+</div>
+</div>
+<!-- 4 Vintage Telemetry Gauges -->
+<div class="bg-[#dcd4c2] p-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+<!-- Metric 1 -->
+<div class="win-sunken bg-[#efe8d8] p-3">
+<div class="flex items-center justify-between text-[#555] font-retro text-[11px] pb-1 border-b border-[#b5ad9e]">
+<span>[GAUGE 01]</span>
+<span class="font-bold text-[#006565]">THROUGHPUT</span>
+</div>
+<div class="text-2xl font-bold font-retro mt-2 text-[#000080]">
+          48.2M <span class="text-xs text-black font-normal">RPS</span>
+</div>
+<div class="text-[11px] text-[#006565] font-retro mt-1 flex items-center gap-1">
+<span>▲</span> +14.2% OPTIMIZED (eBPF)
+        </div>
+<!-- Vintage LED sparkline segments -->
+<div class="mt-2 pt-2 border-t border-[#b5ad9e] flex items-end gap-1 h-5">
+<div class="w-1/6 bg-[#008080] h-[40%]"></div>
+<div class="w-1/6 bg-[#008080] h-[65%]"></div>
+<div class="w-1/6 bg-[#008080] h-[50%]"></div>
+<div class="w-1/6 bg-[#008080] h-[85%]"></div>
+<div class="w-1/6 bg-[#008080] h-[70%]"></div>
+<div class="w-1/6 bg-[#000080] h-full"></div>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="win-sunken bg-[#efe8d8] p-3">
+<div class="flex items-center justify-between text-[#555] font-retro text-[11px] pb-1 border-b border-[#b5ad9e]">
+<span>[GAUGE 02]</span>
+<span class="font-bold text-[#6a0dad]">NEURAL INFERENCE</span>
+</div>
+<div class="text-2xl font-bold font-retro mt-2 text-[#6a0dad]">
+          840 <span class="text-xs text-black font-normal">TFLOPS</span>
+</div>
+<div class="text-[11px] text-[#6a0dad] font-retro mt-1 flex items-center gap-1">
+<span>●</span> SUB-5ms P99 LATENCY
+        </div>
+<div class="mt-2 pt-2 border-t border-[#b5ad9e] flex items-end gap-1 h-5">
+<div class="w-1/6 bg-[#800080] h-[55%]"></div>
+<div class="w-1/6 bg-[#800080] h-[40%]"></div>
+<div class="w-1/6 bg-[#800080] h-[75%]"></div>
+<div class="w-1/6 bg-[#800080] h-[60%]"></div>
+<div class="w-1/6 bg-[#800080] h-[90%]"></div>
+<div class="w-1/6 bg-[#6a0dad] h-[95%]"></div>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="win-sunken bg-[#efe8d8] p-3">
+<div class="flex items-center justify-between text-[#555] font-retro text-[11px] pb-1 border-b border-[#b5ad9e]">
+<span>[GAUGE 03]</span>
+<span class="font-bold text-[#006565]">RELIABILITY</span>
+</div>
+<div class="text-2xl font-bold font-retro mt-2 text-[#006565]">
+          99.999%
+        </div>
+<div class="text-[11px] text-[#008000] font-retro mt-1 flex items-center gap-1">
+<span>✔</span> ZERO SEV-1 INCIDENTS
+        </div>
+<div class="mt-2 pt-2 border-t border-[#b5ad9e] flex items-end gap-1 h-5">
+<div class="w-1/6 bg-[#008000] h-[90%]"></div>
+<div class="w-1/6 bg-[#008000] h-[95%]"></div>
+<div class="w-1/6 bg-[#008000] h-[92%]"></div>
+<div class="w-1/6 bg-[#008000] h-[98%]"></div>
+<div class="w-1/6 bg-[#008000] h-[99%]"></div>
+<div class="w-1/6 bg-[#008000] h-full"></div>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="win-sunken bg-[#efe8d8] p-3">
+<div class="flex items-center justify-between text-[#555] font-retro text-[11px] pb-1 border-b border-[#b5ad9e]">
+<span>[GAUGE 04]</span>
+<span class="font-bold text-[#333]">OPEN SOURCE</span>
+</div>
+<div class="text-2xl font-bold font-retro mt-2 text-[#111]">
+          42 <span class="text-xs text-[#555] font-normal">REPOSITORIES</span>
+</div>
+<div class="text-[11px] text-[#333] font-retro mt-1 flex items-center gap-1">
+<span>★</span> 18.4K GITHUB STARS
+        </div>
+<div class="mt-2 pt-2 border-t border-[#b5ad9e] flex items-end gap-1 h-5">
+<div class="w-1/6 bg-[#777] h-[40%]"></div>
+<div class="w-1/6 bg-[#777] h-[55%]"></div>
+<div class="w-1/6 bg-[#777] h-[65%]"></div>
+<div class="w-1/6 bg-[#777] h-[75%]"></div>
+<div class="w-1/6 bg-[#777] h-[85%]"></div>
+<div class="w-1/6 bg-[#333] h-full"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- 4. FEATURED SYSTEMS: FLOPPY / DOSSIER WORKSTATION WINDOWS                -->
+<!-- ========================================================================= -->
+<section class="win-box p-1" id="projects">
+<!-- Titlebar -->
+<div class="win-titlebar px-2 py-1 flex items-center justify-between font-bold text-xs select-none">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm" data-icon="folder_special">folder_special</span>
+<span>A:\ARTIFACTS\CLASSIFIED_MISSION_SYSTEMS.DIR</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[11px] text-yellow-200">3 OBJECT(S) FOUND</span>
+<button class="win-btn w-4 h-4 flex items-center justify-center text-[10px] text-black">_</button>
+<button class="win-btn w-4 h-4 flex items-center justify-center text-[10px] text-black">■</button>
+</div>
+</div>
+<!-- Explorer Toolbar -->
+<div class="bg-[#c0c0c0] px-2 py-1 border-b border-[#808080] flex items-center gap-2 text-xs">
+<span class="font-bold">LOCATION:</span>
+<div class="win-sunken bg-white px-2 py-0.5 flex-1 font-mono text-[11px]">
+        A:\PROJECTS\MISSION_SYSTEMS\
+      </div>
+<button class="win-btn px-2 py-0.5 text-[10px] font-bold">UP DIR</button>
+</div>
+<!-- Projects Grid Container -->
+<div class="bg-[#dcd4c2] p-4">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+<!-- Dossier 1: SYNAPSE-V -->
+<article class="win-box p-1 bg-[#c0c0c0] flex flex-col justify-between">
+<div>
+<!-- Header bar -->
+<div class="win-titlebar-teal px-2 py-0.5 text-xs font-bold flex justify-between items-center text-white">
+<span>01_SYNAPSE.EXE</span>
+<span class="text-[10px] bg-black/30 px-1">REV: 4.2</span>
+</div>
+<!-- Preview Image / Diagram with retro frame -->
+<div class="p-2 bg-[#f4ecd8]">
+<div class="win-sunken bg-black p-1 mb-2 relative">
+<img class="w-full h-36 object-cover dither-portrait" data-alt="Futuristic cybernetic neural mesh architecture schematic diagram displaying glowing cyan node clusters, orthogonal vector lines, distributed consensus data pathways on a deep obsidian blueprint background with high technical clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGkR_ue83iMzmMsBDcPWkG-jiGdldnFIRlZshWAjMzi_dtAtOywweLGSc8vExlMsWG6_9hvWbihTJyk-hazrZerc2whpFy4Im-QBocZYpq7bNDOokxcxRFB6KYS6K0M1_hocorQn7au5J6BGoXR2Lx8cM1tWt7U1yw05B3fSn5oMhcTlpWbbv2zFmyHLiICbXSgMMbqC7B2G49A2hn3r8wU0kmmgEUYkrwNBAaKtM4"/>
+<div class="absolute top-2 right-2 bg-[#000080] text-white px-1.5 py-0.5 text-[10px] font-bold">
+                  CONSENSUS_ENGINE
+                </div>
+</div>
+<h3 class="font-bold text-sm text-[#000080] font-retro">
+                SYNAPSE-V // Autonomous Neural Mesh
+              </h3>
+<p class="text-xs text-[#333] font-mono mt-1 leading-snug">
+                Distributed Byzantine fault-tolerant consensus engine for heterogeneous LLM swarms. Orchestrates peer-to-peer token sharding and parameter synchronization across distributed enclaves.
+              </p>
+<!-- Chunky Retro Chips -->
+<div class="flex flex-wrap gap-1 my-2">
+<span class="win-btn px-1.5 py-0.5 text-[10px] font-bold bg-[#c0c0c0]">Rust</span>
+<span class="win-btn px-1.5 py-0.5 text-[10px] font-bold bg-[#c0c0c0]">Wasm</span>
+<span class="win-btn px-1.5 py-0.5 text-[10px] font-bold bg-[#c0c0c0]">CUDA</span>
+<span class="win-btn px-1.5 py-0.5 text-[10px] font-bold bg-[#c0c0c0]">eBPF</span>
+</div>
+<!-- Micro Stats Box -->
+<div class="win-sunken bg-[#e8dec9] p-1.5 text-[11px] grid grid-cols-2 gap-1 font-retro">
+<div><span class="text-[#666]">THROUGHPUT:</span> <span class="font-bold text-[#006565]">100k TPS</span></div>
+<div><span class="text-[#666]">CONSENSUS:</span> <span class="font-bold text-[#000080]">0.4ms LAG</span></div>
+</div>
+</div>
+</div>
+<!-- Bottom Action Buttons -->
+<div class="p-2 bg-[#c0c0c0] border-t border-[#808080] flex justify-between items-center text-xs">
+<a class="win-btn px-2.5 py-1 font-bold text-[#006565] flex items-center gap-1 hover:bg-[#d0d0d0]" href="#console">
+<span class="material-symbols-outlined text-xs" data-icon="tune">tune</span>
+<span>[EXECUTE]</span>
+</a>
+<a class="win-btn px-2.5 py-1 font-bold text-[#333] flex items-center gap-1 hover:bg-[#d0d0d0]" href="https://github.com" rel="noreferrer" target="_blank">
+<span class="material-symbols-outlined text-xs" data-icon="code">code</span>
+<span>[SOURCE]</span>
+</a>
+</div>
+</article>
+<!-- Dossier 2: AETHER-OS -->
+<article class="win-box p-1 bg-[#c0c0c0] flex flex-col justify-between">
+<div>
+<div class="win-titlebar-olive px-2 py-0.5 text-xs font-bold flex justify-between items-center text-white">
+<span>02_AETHER.SYS</span>
+<span class="text-[10px] bg-black/30 px-1">ISO-26262</span>
+</div>
+<div class="p-2 bg-[#f4ecd8]">
+<div class="win-sunken bg-black p-1 mb-2 relative">
+<img class="w-full h-36 object-cover dither-portrait" data-alt="Technical wireframe architecture blueprint representing a zero-trust real-time microkernel for aerospace embedded flight controls, glowing violet circuit bus traces, crisp isometric memory layouts in high-tech dark mode." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJRHyjMJPs9_P_fricXtKio8Pu1F3Nb3HXm746yxtsBU-ehEmxEMtBwUMA2PvfLV5QAXUtACbTBZuw3EYAnjop-HkwS8OcNvOZ4vzGF6-3Gopxa4p_ZXeEG8ZxQbospncSiIDjDHAWZcAoAQCj0GV8vwhJAxjXE2VumUe_RqVib3NXu1SMAkoc9o_eQKuobaxXJF7nAsIbkmJjtAtLUidRFzeG8YXGhYOq3p9h7mMW"/>
+<div class="absolute top-2 right-2 bg-[#505c2e] text-white px-1.5 py-0.5 text-[10px] font-bold">
+                  MICROKERNEL_RT
+                </div>
+</div>
+<h3 class="font-bold text-sm text-[#505c2e] font-retro">
+                AETHER-OS // Zero-Trust Microkernel
+              </h3>
+<p class="text-xs text-[#333] font-mono mt-1 leading-snug">
+                Mathematical proof-verified microkernel designed for edge aerospace computing. Features capability-based security, partitioned space-time execution, and hardware root-of-trust.
+              </p>
+<div class="flex flex-wrap gap-1 my-2">
+<span class="win-btn px-1.5 py-0.5 text-[10px] font-bold bg-[#c0c0c0]">Zig</span>
+<span class="win-btn px-1.5 py-0.5 text-[10px] font-bold bg-[#c0c0c0]">RISC-V</span>
+<span class="win-btn px-1.5 py-0.5 text-[10px] font-bold bg-[#c0c0c0]">TLA+</span>
+<span class="win-btn px-1.5 py-0.5 text-[10px] font-bold bg-[#c0c0c0]">gRPC</span>
+</div>
+<div class="win-sunken bg-[#e8dec9] p-1.5 text-[11px] grid grid-cols-2 gap-1 font-retro">
+<div><span class="text-[#666]">FOOTPRINT:</span> <span class="font-bold text-[#505c2e]">14KB STATIC</span></div>
+<div><span class="text-[#666]">CERTIFIED:</span> <span class="font-bold text-[#111]">ASIL-D READY</span></div>
+</div>
+</div>
+</div>
+<div class="p-2 bg-[#c0c0c0] border-t border-[#808080] flex justify-between items-center text-xs">
+<a class="win-btn px-2.5 py-1 font-bold text-[#505c2e] flex items-center gap-1 hover:bg-[#d0d0d0]" href="#console">
+<span class="material-symbols-outlined text-xs" data-icon="tune">tune</span>
+<span>[EXECUTE]</span>
+</a>
+<a class="win-btn px-2.5 py-1 font-bold text-[#333] flex items-center gap-1 hover:bg-[#d0d0d0]" href="https://github.com" rel="noreferrer" target="_blank">
+<span class="material-symbols-outlined text-xs" data-icon="code">code</span>
+<span>[SOURCE]</span>
+</a>
+</div>
+</article>
+<!-- Dossier 3: KRONOS -->
+<article class="win-box p-1 bg-[#c0c0c0] flex flex-col justify-between">
+<div>
+<div class="win-titlebar px-2 py-0.5 text-xs font-bold flex justify-between items-center text-white">
+<span>03_KRONOS.DRV</span>
+<span class="text-[10px] bg-black/30 px-1">120 FPS</span>
+</div>
+<div class="p-2 bg-[#f4ecd8]">
+<div class="win-sunken bg-black p-1 mb-2 relative">
+<img class="w-full h-36 object-cover dither-portrait" data-alt="Tactical high-frequency telemetry streaming HUD interface with WebGPU rendered waveforms, real-time audio-style spectrograms, cyber-cyan line plots against a pitch dark modular display screen." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDm0uJTt7NNyHrr3lA47_gMbbu4wSjeCL9gIdV_TVmQSzRaFK5Z5bk6C7OGB_9Js0fcFFC4Q_InvZy0GwX4Gyt-VWWjthWQEkiGwB2rz124HNgelhRynR3Wsk5aX20ppWnaY-Dl7tztGRi8uVrf8Pfe8N-zNDIf_Es7SDnyqaBrJJoqwWnA-zmsBt7H4g_ImIS1XSPna_ZN2u4Ntt8GGcyV7Vbc240GxmCWwDrTsCb7"/>
+<div class="absolute top-2 right-2 bg-[#008080] text-white px-1.5 py-0.5 text-[10px] font-bold">
+                  GPU_TELEMETRY
+                </div>
+</div>
+<h3 class="font-bold text-sm text-[#006565] font-retro">
+                KRONOS // High-Frequency Stream
+              </h3>
+<p class="text-xs text-[#333] font-mono mt-1 leading-snug">
+                Lock-free timeseries processing engine rendering hundreds of millions of real-time datapoints. Directly couples ring-buffers to GPU rasterizer passes via WebGPU shaders.
+              </p>
+<div class="flex flex-wrap gap-1 my-2">
+<span class="win-btn px-1.5 py-0.5 text-[10px] font-bold bg-[#c0c0c0]">Go</span>
+<span class="win-btn px-1.5 py-0.5 text-[10px] font-bold bg-[#c0c0c0]">Arrow</span>
+<span class="win-btn px-1.5 py-0.5 text-[10px] font-bold bg-[#c0c0c0]">WebGPU</span>
+<span class="win-btn px-1.5 py-0.5 text-[10px] font-bold bg-[#c0c0c0]">SIMD</span>
+</div>
+<div class="win-sunken bg-[#e8dec9] p-1.5 text-[11px] grid grid-cols-2 gap-1 font-retro">
+<div><span class="text-[#666]">RENDER PASS:</span> <span class="font-bold text-[#006565]">120 FPS GPU</span></div>
+<div><span class="text-[#666]">INGESTION:</span> <span class="font-bold text-[#000080]">10M PTS/SEC</span></div>
+</div>
+</div>
+</div>
+<div class="p-2 bg-[#c0c0c0] border-t border-[#808080] flex justify-between items-center text-xs">
+<a class="win-btn px-2.5 py-1 font-bold text-[#006565] flex items-center gap-1 hover:bg-[#d0d0d0]" href="#console">
+<span class="material-symbols-outlined text-xs" data-icon="tune">tune</span>
+<span>[EXECUTE]</span>
+</a>
+<a class="win-btn px-2.5 py-1 font-bold text-[#333] flex items-center gap-1 hover:bg-[#d0d0d0]" href="https://github.com" rel="noreferrer" target="_blank">
+<span class="material-symbols-outlined text-xs" data-icon="code">code</span>
+<span>[SOURCE]</span>
+</a>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- 5. TECH INVENTORY: SPREADSHEET / DATABASE VIEWER (TECH_INVENTORY.DBF)     -->
+<!-- ========================================================================= -->
+<section class="win-box p-1" id="stack">
+<!-- Titlebar -->
+<div class="win-titlebar px-2 py-1 flex items-center justify-between font-bold text-xs select-none">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm" data-icon="grid_on">grid_on</span>
+<span>DATABASE_VIEWER.EXE — TECH_INVENTORY.DBF [24 RECORDS LOADED]</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-[10px] bg-white/20 px-1 font-mono">REC: 1 TO 24</span>
+<button class="win-btn w-4 h-4 flex items-center justify-center text-[10px] text-black">_</button>
+<button class="win-btn w-4 h-4 flex items-center justify-center text-[10px] text-black">■</button>
+</div>
+</div>
+<!-- Table Canvas -->
+<div class="bg-[#dcd4c2] p-4">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Sector 1: Low-Level Tooling -->
+<div class="win-box p-1 bg-[#c0c0c0]">
+<div class="win-titlebar-teal px-2 py-0.5 text-xs font-bold text-white flex justify-between">
+<span>[TABLE 1]: SYSTEMS &amp; LOW-LEVEL TOOLING</span>
+<span class="text-[10px]">INDEX: ASM/SYS</span>
+</div>
+<div class="bg-[#fffdf7] p-2">
+<table class="w-full text-left text-xs font-mono border-collapse">
+<thead>
+<tr class="bg-[#dfd7c5] border-b border-[#808080] text-[11px]">
+<th class="p-1">FIELD</th>
+<th class="p-1">TOOL / PROTOCOL</th>
+<th class="p-1">SPECIALIZATION</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e5decb]">
+<tr>
+<td class="p-1 text-[#666]">01</td>
+<td class="p-1 font-bold text-[#000080]">Rust</td>
+<td class="p-1">Async / Tokio / FFI</td>
+</tr>
+<tr>
+<td class="p-1 text-[#666]">02</td>
+<td class="p-1 font-bold text-[#000080]">C / C++20</td>
+<td class="p-1">SIMD / Lock-Free</td>
+</tr>
+<tr>
+<td class="p-1 text-[#666]">03</td>
+<td class="p-1 font-bold text-[#000080]">Zig</td>
+<td class="p-1">Bare-Metal / Tooling</td>
+</tr>
+<tr>
+<td class="p-1 text-[#666]">04</td>
+<td class="p-1 font-bold text-[#000080]">Linux Kernel</td>
+<td class="p-1">IO_uring / Netlink</td>
+</tr>
+<tr>
+<td class="p-1 text-[#666]">05</td>
+<td class="p-1 font-bold text-[#000080]">eBPF</td>
+<td class="p-1">XDP / Observability</td>
+</tr>
+<tr>
+<td class="p-1 text-[#666]">06</td>
+<td class="p-1 font-bold text-[#000080]">WebAssembly</td>
+<td class="p-1">Wasmtime / Component</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Sector 2: AI & Inference -->
+<div class="win-box p-1 bg-[#c0c0c0]">
+<div class="win-titlebar px-2 py-0.5 text-xs font-bold text-white flex justify-between">
+<span>[TABLE 2]: AI &amp; NEURAL ACCELERATION</span>
+<span class="text-[10px]">INDEX: TENSOR/RT</span>
+</div>
+<div class="bg-[#fffdf7] p-2">
+<table class="w-full text-left text-xs font-mono border-collapse">
+<thead>
+<tr class="bg-[#dfd7c5] border-b border-[#808080] text-[11px]">
+<th class="p-1">FIELD</th>
+<th class="p-1">TOOL / ENGINE</th>
+<th class="p-1">SPECIALIZATION</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e5decb]">
+<tr>
+<td class="p-1 text-[#666]">07</td>
+<td class="p-1 font-bold text-[#6a0dad]">PyTorch</td>
+<td class="p-1">Custom C++ Ops</td>
+</tr>
+<tr>
+<td class="p-1 text-[#666]">08</td>
+<td class="p-1 font-bold text-[#6a0dad]">OpenAI Triton</td>
+<td class="p-1">Fused Kernels</td>
+</tr>
+<tr>
+<td class="p-1 text-[#666]">09</td>
+<td class="p-1 font-bold text-[#6a0dad]">vLLM / SGLang</td>
+<td class="p-1">PagedAttention</td>
+</tr>
+<tr>
+<td class="p-1 text-[#666]">10</td>
+<td class="p-1 font-bold text-[#6a0dad]">TensorRT-LLM</td>
+<td class="p-1">FP8 / INT4 Quant</td>
+</tr>
+<tr>
+<td class="p-1 text-[#666]">11</td>
+<td class="p-1 font-bold text-[#6a0dad]">CUDA Core</td>
+<td class="p-1">NVLink / CuBLAS</td>
+</tr>
+<tr>
+<td class="p-1 text-[#666]">12</td>
+<td class="p-1 font-bold text-[#6a0dad]">LangGraph</td>
+<td class="p-1">Autonomous Swarms</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Sector 3: Distributed Fabric -->
+<div class="win-box p-1 bg-[#c0c0c0]">
+<div class="win-titlebar-olive px-2 py-0.5 text-xs font-bold text-white flex justify-between">
+<span>[TABLE 3]: CLOUD &amp; DISTRIBUTED FABRIC</span>
+<span class="text-[10px]">INDEX: NET/RPC</span>
+</div>
+<div class="bg-[#fffdf7] p-2">
+<table class="w-full text-left text-xs font-mono border-collapse">
+<thead>
+<tr class="bg-[#dfd7c5] border-b border-[#808080] text-[11px]">
+<th class="p-1">FIELD</th>
+<th class="p-1">INFRA / PROTOCOL</th>
+<th class="p-1">SPECIALIZATION</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e5decb]">
+<tr>
+<td class="p-1 text-[#666]">13</td>
+<td class="p-1 font-bold text-[#505c2e]">Kubernetes</td>
+<td class="p-1">Custom Operators</td>
+</tr>
+<tr>
+<td class="p-1 text-[#666]">14</td>
+<td class="p-1 font-bold text-[#505c2e]">Terraform</td>
+<td class="p-1">GitOps / Multi-cloud</td>
+</tr>
+<tr>
+<td class="p-1 text-[#666]">15</td>
+<td class="p-1 font-bold text-[#505c2e]">Raft / Paxos</td>
+<td class="p-1">State Replication</td>
+</tr>
+<tr>
+<td class="p-1 text-[#666]">16</td>
+<td class="p-1 font-bold text-[#505c2e]">Kafka / Redpanda</td>
+<td class="p-1">Zero-Copy Ingest</td>
+</tr>
+<tr>
+<td class="p-1 text-[#666]">17</td>
+<td class="p-1 font-bold text-[#505c2e]">ClickHouse</td>
+<td class="p-1">Petabyte Analytics</td>
+</tr>
+<tr>
+<td class="p-1 text-[#666]">18</td>
+<td class="p-1 font-bold text-[#505c2e]">gRPC / Protobuf</td>
+<td class="p-1">Zero-Alloc RPC</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Sector 4: Creative & UI -->
+<div class="win-box p-1 bg-[#c0c0c0]">
+<div class="win-titlebar px-2 py-0.5 text-xs font-bold text-white flex justify-between">
+<span>[TABLE 4]: TACTILE INTERFACES &amp; SPATIAL UI</span>
+<span class="text-[10px]">INDEX: GFX/HUD</span>
+</div>
+<div class="bg-[#fffdf7] p-2">
+<table class="w-full text-left text-xs font-mono border-collapse">
+<thead>
+<tr class="bg-[#dfd7c5] border-b border-[#808080] text-[11px]">
+<th class="p-1">FIELD</th>
+<th class="p-1">UI STACK</th>
+<th class="p-1">SPECIALIZATION</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e5decb]">
+<tr>
+<td class="p-1 text-[#666]">19</td>
+<td class="p-1 font-bold text-[#006565]">TypeScript</td>
+<td class="p-1">Strict Type Systems</td>
+</tr>
+<tr>
+<td class="p-1 text-[#666]">20</td>
+<td class="p-1 font-bold text-[#006565]">Next.js 15</td>
+<td class="p-1">RSC / Edge Runtime</td>
+</tr>
+<tr>
+<td class="p-1 text-[#666]">21</td>
+<td class="p-1 font-bold text-[#006565]">WebGL / Three.js</td>
+<td class="p-1">Shader Graph / GLSL</td>
+</tr>
+<tr>
+<td class="p-1 text-[#666]">22</td>
+<td class="p-1 font-bold text-[#006565]">WebGPU</td>
+<td class="p-1">Compute Shaders</td>
+</tr>
+<tr>
+<td class="p-1 text-[#666]">23</td>
+<td class="p-1 font-bold text-[#006565]">Tailwind CSS</td>
+<td class="p-1">Retro Design Tokens</td>
+</tr>
+<tr>
+<td class="p-1 text-[#666]">24</td>
+<td class="p-1 font-bold text-[#006565]">RxJS / WebSockets</td>
+<td class="p-1">Real-Time Streams</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- 6. INTERACTIVE MS-DOS CRT PROMPT (COMMAND.COM)                            -->
+<!-- ========================================================================= -->
+<section class="win-box p-1" id="console">
+<!-- Titlebar -->
+<div class="win-titlebar px-2 py-1 flex items-center justify-between font-bold text-xs select-none">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm" data-icon="terminal">terminal</span>
+<span>MS-DOS Prompt — [COMMAND.COM - 80x25]</span>
+</div>
+<div class="flex items-center gap-1 text-black font-mono">
+<button class="win-btn w-4 h-4 flex items-center justify-center text-[10px]">_</button>
+<button class="win-btn w-4 h-4 flex items-center justify-center text-[10px]">■</button>
+<button class="win-btn w-4 h-4 flex items-center justify-center text-[10px]">×</button>
+</div>
+</div>
+<!-- CRT Terminal Screen Body -->
+<div class="crt-screen p-4 sm:p-6 font-mono text-xs sm:text-sm text-[#33ff33] space-y-3 leading-relaxed relative">
+<!-- Ambient retro header -->
+<div class="text-[#20cc20] text-xs">
+        Starting MS-DOS v6.22...<br/>
+        HIMEM: DOS XMS Driver, Version 3.10 - 05/12/94<br/>
+        VANCE-DOS Kernel loaded. 640K Base Memory OK. Expanded Memory Available.
+      </div>
+<!-- Command Line 1 -->
+<div>
+<span class="text-white font-bold">C:\USERS\KAELEN&gt;</span> uname -a
+        <div class="text-[#a0ffa0] text-xs mt-0.5">
+          Linux sys-vance-rt 6.8.0-rt4 #1 SMP PREEMPT_RT Mon Apr 14 02:40:12 UTC 2025 x86_64 GNU/Linux
+        </div>
+</div>
+<!-- Command Line 2 -->
+<div>
+<span class="text-white font-bold">C:\USERS\KAELEN&gt;</span> type IDENTITY.TXT
+        <div class="mt-1 p-2 bg-[#002200] border border-[#006600] text-[#c0ffc0] text-xs space-y-1">
+<div><strong class="text-white">[OPERATOR]:</strong> Kaelen Vance (Principal Systems Craftsman)</div>
+<div><strong class="text-yellow-300">[FOCUS]:</strong> Distributed Mesh Consensus, LLM Inference Optimization, Deterministic Microkernels.</div>
+<div><strong class="text-[#33ff33]">[CONTACT]:</strong> kaelen@vance.systems // San Francisco, CA</div>
+</div>
+</div>
+<!-- Command Line 3 -->
+<div>
+<span class="text-white font-bold">C:\USERS\KAELEN&gt;</span> CHECK_CLEARANCE.EXE --TARGET="NEW_VENTURE"
+        <div class="text-yellow-300 text-xs mt-0.5 flex items-center gap-1">
+<span>&gt;&gt; [STATUS: SUCCESS]</span> Bandwidth verified. Ready for Principal advisory or foundational tech lead roles.
+        </div>
+</div>
+<!-- Interactive Dispatch Form Styled as MS-DOS Batch Prompt -->
+<div class="pt-3 border-t border-[#004400]">
+<div class="text-yellow-300 font-bold mb-2">
+          --- DISPATCH DIRECTIVE TO KAELEN VANCE [PGP TRANSMISSION] ---
+        </div>
+<form action="#" class="space-y-3" method="POST" onsubmit="event.preventDefault(); alert('TRANSMISSION ENCRYPTED &amp; QUEUED IN OUTBOX SPOOL');">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div>
+<label class="block text-[#a0ffa0] text-xs mb-1">CALLSIGN / NAME:</label>
+<input class="w-full bg-[#051005] border border-[#00aa00] text-[#33ff33] p-1.5 text-xs font-mono focus:border-white focus:ring-0 outline-none placeholder-[#005500]" placeholder="e.g. Dr. Eleanor Vance" required="" type="text"/>
+</div>
+<div>
+<label class="block text-[#a0ffa0] text-xs mb-1">RETURN CONDUIT (EMAIL):</label>
+<input class="w-full bg-[#051005] border border-[#00aa00] text-[#33ff33] p-1.5 text-xs font-mono focus:border-white focus:ring-0 outline-none placeholder-[#005500]" placeholder="name@organization.com" required="" type="email"/>
+</div>
+</div>
+<div>
+<label class="block text-[#a0ffa0] text-xs mb-1">MISSION DIRECTIVE / PAYLOAD:</label>
+<textarea class="w-full bg-[#051005] border border-[#00aa00] text-[#33ff33] p-1.5 text-xs font-mono focus:border-white focus:ring-0 outline-none placeholder-[#005500]" placeholder="Describe technical specification, distributed architecture challenge, or project scope..." required="" rows="3"></textarea>
+</div>
+<!-- Prompt + Beveled Dispatch Button -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
+<div class="flex items-center gap-1 text-xs">
+<span class="text-white font-bold">C:\USERS\KAELEN&gt;</span>
+<span class="text-[#a0ffa0]">SEND /ENCRYPT=PGP</span>
+<span class="inline-block w-2 h-4 bg-[#33ff33] animate-cursor"></span>
+</div>
+<button class="win-btn px-4 py-2 font-bold text-black text-xs bg-[#c0c0c0] hover:bg-[#d8d8d8] flex items-center justify-center gap-1.5" type="submit">
+<span class="material-symbols-outlined text-xs font-bold" data-icon="outgoing_mail">outgoing_mail</span>
+<span>[DISPATCH DIRECTIVE]</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+</section>
+</main>
+<!-- ========================================================================= -->
+<!-- 7. RETRO BOTTOM TASKBAR & SYSTEM TRAY                                    -->
+<!-- ========================================================================= -->
+<footer class="fixed bottom-0 left-0 right-0 z-50 bg-[#c0c0c0] border-t-2 border-white shadow-md text-black select-none">
+<div class="px-2 py-1 flex items-center justify-between h-10 font-retro">
+<!-- Start Button + Active Window Tabs -->
+<div class="flex items-center gap-2 overflow-x-auto">
+<!-- Start Button with retro embossed logo -->
+<a class="win-btn px-3 py-1 font-bold flex items-center gap-1.5 bg-[#c0c0c0] text-xs hover:bg-[#d8d8d8]" href="#hero">
+<!-- 4-color retro window mark -->
+<span class="grid grid-cols-2 gap-0.5 w-3 h-3">
+<span class="bg-red-500 w-1.5 h-1.5"></span>
+<span class="bg-green-500 w-1.5 h-1.5"></span>
+<span class="bg-blue-500 w-1.5 h-1.5"></span>
+<span class="bg-yellow-400 w-1.5 h-1.5"></span>
+</span>
+<span class="tracking-wide">Start</span>
+</a>
+<!-- Window Tab: Profile (Active Sunken) -->
+<a class="win-sunken bg-[#dfdfdf] px-3 py-1 text-xs font-bold flex items-center gap-1.5 border-r border-b" href="#hero">
+<span class="material-symbols-outlined text-xs text-[#000080]" data-icon="account_circle">account_circle</span>
+<span class="truncate max-w-[90px] sm:max-w-none">Profile.exe</span>
+</a>
+<!-- Window Tab: Artifacts (Raised) -->
+<a class="win-btn px-2.5 py-1 text-xs font-bold hidden sm:flex items-center gap-1 hover:bg-[#d0d0d0]" href="#projects">
+<span class="material-symbols-outlined text-xs" data-icon="folder">folder</span>
+<span>Projects.dir</span>
+</a>
+<!-- Window Tab: Terminal (Raised) -->
+<a class="win-btn px-2.5 py-1 text-xs font-bold hidden md:flex items-center gap-1 hover:bg-[#d0d0d0]" href="#console">
+<span class="material-symbols-outlined text-xs" data-icon="terminal">terminal</span>
+<span>COMMAND.COM</span>
+</a>
+</div>
+<!-- Retro System Tray (Sunken Bevel) -->
+<div class="win-sunken bg-[#dcdcdc] px-2.5 py-1 flex items-center gap-3 text-xs">
+<!-- Social / Quick Conduits -->
+<a class="hover:text-[#000080]" href="https://github.com" rel="noreferrer" target="_blank" title="GitHub">
+<span class="material-symbols-outlined text-xs" data-icon="code">code</span>
+</a>
+<a class="hover:text-[#000080]" href="https://twitter.com" rel="noreferrer" target="_blank" title="Feed">
+<span class="material-symbols-outlined text-xs" data-icon="satellite_alt">satellite_alt</span>
+</a>
+<!-- Speaker Volume icon -->
+<span class="material-symbols-outlined text-xs text-[#444]" data-icon="volume_up">volume_up</span>
+<!-- 3.5 Floppy Indicator -->
+<span class="material-symbols-outlined text-xs text-[#006565]" data-icon="save">save</span>
+<!-- Retro Digital Clock -->
+<span class="font-bold text-[#111] text-[11px] border-l border-[#999] pl-2">
+        12:42 PM
+      </span>
+</div>
+</div>
+</footer>
+</body></html>

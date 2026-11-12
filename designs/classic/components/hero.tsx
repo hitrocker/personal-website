@@ -1,6 +1,6 @@
 "use client";
 
-import { About } from "@/components/about";
+import { About } from "@/designs/classic/components/about";
 import { hero, profile } from "@/lib/content";
 import { motion, useReducedMotion } from "framer-motion";
 

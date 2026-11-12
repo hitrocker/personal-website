@@ -1,7 +1,7 @@
 "use client";
 
-import { SectionHeading } from "@/components/ui/section-heading";
-import { Reveal } from "@/components/ui/reveal";
+import { SectionHeading } from "@/designs/classic/components/ui/section-heading";
+import { Reveal } from "@/designs/classic/components/ui/reveal";
 import { experience } from "@/lib/content";
 
 export function Experience() {

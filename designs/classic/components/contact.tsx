@@ -1,8 +1,8 @@
 "use client";
 
-import { OutLink } from "@/components/ui/out-link";
-import { Reveal } from "@/components/ui/reveal";
-import { SectionHeading } from "@/components/ui/section-heading";
+import { OutLink } from "@/designs/classic/components/ui/out-link";
+import { Reveal } from "@/designs/classic/components/ui/reveal";
+import { SectionHeading } from "@/designs/classic/components/ui/section-heading";
 import { contact, profile } from "@/lib/content";
 import { Check, Copy } from "lucide-react";
 import { FormEvent, useState } from "react";

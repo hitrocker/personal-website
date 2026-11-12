@@ -1,6 +1,6 @@
 "use client";
 
-import { ThemeToggle } from "@/components/chrome/theme-toggle";
+import { ThemeToggle } from "@/designs/classic/components/chrome/theme-toggle";
 import { navItems, profile } from "@/lib/content";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Menu, X } from "lucide-react";
