@@ -31,7 +31,13 @@ export function Nav() {
         className="grid h-[var(--nav-h)] grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-7"
         aria-label="Primary"
       >
-        <div aria-hidden="true" />
+        <a
+          href="#top"
+          className="display justify-self-start text-xl tracking-[-0.06em] text-lime"
+          aria-label={`${profile.name} - back to top`}
+        >
+          {profile.initials}
+        </a>
 
         <ul className="hidden items-center gap-8 md:flex">
           {navItems.map((item) => (
@@ -46,7 +52,7 @@ export function Nav() {
           ))}
         </ul>
 
-        <div className="flex items-center justify-end gap-2">
+        <div className="col-start-3 flex items-center justify-end gap-2">
           <ThemeToggle />
           <a href={profile.cvHref} className="btn btn-ghost hidden h-10 px-4 text-sm sm:inline-flex">
             CV

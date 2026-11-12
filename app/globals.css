@@ -195,34 +195,6 @@ body {
   }
 }
 
-.loader {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: grid;
-  place-content: center;
-  gap: 10px;
-  background: #050507;
-  text-align: center;
-  transition:
-    opacity 0.6s var(--ease),
-    visibility 0.6s;
-}
-
-.loader.is-done {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.loader-mark {
-  font-family: var(--font-display), sans-serif;
-  font-size: 64px;
-  font-weight: 800;
-  letter-spacing: -0.06em;
-  color: var(--lime);
-}
-
 .kicker,
 .mono {
   font-family: var(--font-mono), ui-monospace, monospace;
@@ -289,6 +261,8 @@ body {
   transform: translateY(-2px);
 }
 
+/* Component classes live in a layer so Tailwind utilities (hidden, md:inline-flex…) can override them. */
+@layer components {
 .tag {
   display: inline-flex;
   align-items: center;
@@ -372,6 +346,7 @@ body {
 
 .icon-link:hover {
   border-color: color-mix(in srgb, var(--lime) 40%, var(--line));
+}
 }
 
 .theme-sun {
@@ -484,13 +459,8 @@ body {
   .pulse-dot,
   .marquee-track,
   .maze-path,
-  .scroll-line,
-  .loader {
+  .scroll-line {
     animation: none;
-  }
-
-  .loader {
-    display: none;
   }
 
   .cursor {
