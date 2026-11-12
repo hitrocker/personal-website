@@ -1,6 +1,11 @@
 "use client";
 
-import { Grid2048Visual, MazeVisual } from "@/components/project-visuals";
+import {
+  ArrowPuzzleVisual,
+  Grid2048Visual,
+  MazeVisual,
+  SkyHopperVisual,
+} from "@/components/project-visuals";
 import { OutLink } from "@/components/ui/out-link";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -14,9 +19,9 @@ export function Projects() {
       <Reveal>
         <SectionHeading
           kicker="Selected work"
-          title="Shipped as a solo builder."
+          title="Four games, shipped solo."
           accent="Held to a team bar."
-          description="Two consumer games, designed independently and released. Evaluation is one half of the story. These are the other."
+          description="Four mobile games on Google Play, each designed, built, tested, and released on my own. Evaluation is one half of the story. These are the other."
         />
       </Reveal>
 
@@ -26,12 +31,12 @@ export function Projects() {
             <article className="card overflow-hidden p-6 sm:p-7 lg:p-8">
               <div
                 className={`grid items-center gap-6 lg:gap-10 ${
-                  project.visual === "maze"
+                  index % 2 === 1
                     ? "lg:grid-cols-[auto_minmax(0,1fr)]"
                     : "lg:grid-cols-[minmax(0,1fr)_auto]"
                 }`}
               >
-                <div className={project.visual === "maze" ? "lg:order-2" : ""}>
+                <div className={index % 2 === 1 ? "lg:order-2" : ""}>
                   <p className="font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
                     {project.kind} · {project.role}
                   </p>
@@ -64,10 +69,18 @@ export function Projects() {
                 </div>
                 <div
                   className={`flex w-full justify-center lg:w-[28rem] ${
-                    project.visual === "maze" ? "lg:order-1" : ""
+                    index % 2 === 1 ? "lg:order-1" : ""
                   }`}
                 >
-                  {project.visual === "grid2048" ? <Grid2048Visual /> : <MazeVisual />}
+                  {project.visual === "grid2048" ? (
+                    <Grid2048Visual />
+                  ) : project.visual === "maze" ? (
+                    <MazeVisual />
+                  ) : project.visual === "arrows" ? (
+                    <ArrowPuzzleVisual />
+                  ) : (
+                    <SkyHopperVisual />
+                  )}
                 </div>
               </div>
             </article>
