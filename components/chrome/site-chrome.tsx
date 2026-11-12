@@ -1,11 +1,9 @@
 "use client";
 
 import { AmbientField } from "@/components/chrome/ambient-field";
-import { profile } from "@/lib/content";
 import { useEffect, useRef, useState } from "react";
 
 export function SiteChrome() {
-  const [ready, setReady] = useState(false);
   const [hot, setHot] = useState(false);
   const cursorRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
@@ -39,11 +37,9 @@ export function SiteChrome() {
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
 
-    const timer = window.setTimeout(() => setReady(true), 1400);
     return () => {
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("scroll", onScroll);
-      window.clearTimeout(timer);
       document.body.classList.remove("has-cursor");
     };
   }, []);
@@ -51,10 +47,6 @@ export function SiteChrome() {
   return (
     <>
       <AmbientField />
-      <div className={`loader ${ready ? "is-done" : ""}`} aria-hidden={ready}>
-        <div className="loader-mark">{profile.initials}</div>
-        <p className="kicker">Warming evaluation traces</p>
-      </div>
       <div className="spotlight" aria-hidden="true" />
       <div ref={progressRef} className="progress" aria-hidden="true" />
       <div

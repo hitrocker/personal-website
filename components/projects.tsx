@@ -5,6 +5,7 @@ import { OutLink } from "@/components/ui/out-link";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { projects } from "@/lib/content";
+import { isHttpUrl } from "@/lib/site";
 import { ArrowUpRight } from "lucide-react";
 
 export function Projects() {
@@ -53,7 +54,7 @@ export function Projects() {
                     ))}
                   </div>
                   <div className="mt-6 flex flex-wrap gap-3">
-                    {project.links.map((link) => (
+                    {project.links.filter((link) => isHttpUrl(link.href)).map((link) => (
                       <OutLink key={link.label} href={link.href} className="btn btn-ghost">
                         {link.label}
                         <ArrowUpRight size={15} />
