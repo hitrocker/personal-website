@@ -104,7 +104,7 @@ export const experience: ExperienceItem[] = [
     points: [
       "Trained and benchmarked models across OpenAI, Anthropic, and Google families using RLHF.",
       "Tested output quality on multi-step reasoning, truthfulness, and instruction following.",
-      "Contributed to SEW Bench evaluations, video captioning tasks, and offline workflow improvements.",
+      "Contributed to SWE-bench evaluations, video captioning tasks, and offline workflow improvements.",
       "Streamlined data collection pipelines so large datasets could move quickly without lowering the bar.",
       "Coordinated daily operations with international teammates to hit model accuracy targets on time.",
     ],
@@ -169,9 +169,7 @@ export type Project = {
   name: string;
   kind: string;
   role: string;
-  visual: "grid2048" | "maze" | "screenshot";
-  /** Phone screenshot shown when visual is "screenshot" (portrait, 9:16). */
-  image?: { src: string; alt: string };
+  visual: "grid2048" | "maze" | "arrows" | "hopper";
   summary: string;
   highlights: string[];
   stack: string[];
@@ -243,11 +241,7 @@ export const projects: Project[] = [
     name: "Arrow Puzzle",
     kind: "Unity mobile puzzle",
     role: "Solo developer · shipped",
-    visual: "screenshot",
-    image: {
-      src: "/projects/arrow-puzzle.webp",
-      alt: "Arrow Puzzle gameplay: level 23, a maze of pink arrows on a cream board",
-    },
+    visual: "arrows",
     summary:
       "A tap-to-clear arrow puzzle in Unity and C# - 2,785 bundled levels, then a seeded generator that keeps building bigger boards with no end.",
     highlights: [
@@ -276,11 +270,7 @@ export const projects: Project[] = [
     name: "Sky Hopper",
     kind: "Unity arcade game",
     role: "Solo developer · shipped",
-    visual: "screenshot",
-    image: {
-      src: "/projects/sky-hopper.webp",
-      alt: "Sky Hopper home screen: a pixel-art bird over a city skyline with Play and Settings buttons",
-    },
+    visual: "hopper",
     summary:
       "An original one-tap arcade game in Unity 6 - pixel art and sound effects generated in code, a tuned difficulty curve, and a global leaderboard.",
     highlights: [

@@ -1,6 +1,11 @@
 "use client";
 
-import { Grid2048Visual, MazeVisual, ScreenshotVisual } from "@/components/project-visuals";
+import {
+  ArrowPuzzleVisual,
+  Grid2048Visual,
+  MazeVisual,
+  SkyHopperVisual,
+} from "@/components/project-visuals";
 import { OutLink } from "@/components/ui/out-link";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -71,9 +76,11 @@ export function Projects() {
                     <Grid2048Visual />
                   ) : project.visual === "maze" ? (
                     <MazeVisual />
-                  ) : project.image ? (
-                    <ScreenshotVisual src={project.image.src} alt={project.image.alt} />
-                  ) : null}
+                  ) : project.visual === "arrows" ? (
+                    <ArrowPuzzleVisual />
+                  ) : (
+                    <SkyHopperVisual />
+                  )}
                 </div>
               </div>
             </article>
