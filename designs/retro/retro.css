@@ -1,0 +1,586 @@
+/* MA/OS: the retro desktop design (Stitch "Retro Terminal OS"). Everything is scoped under .retro-root. */
+
+.retro-root {
+  --r-teal: #008080;
+  --r-gray: #c0c0c0;
+  --r-dark: #808080;
+  --r-shadow: #404040;
+  --r-navy: #000080;
+  --r-paper: #f4eddd;
+  --r-ink: #1e1c12;
+  --r-ink-2: #3e4949;
+  --r-crt: #33ff33;
+  --r-amber: #ffb000;
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  background-color: var(--r-teal);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 16px 16px;
+  color: #000;
+  font-family: var(--font-space-mono), "Courier New", monospace;
+  font-size: 13px;
+  line-height: 1.55;
+  padding-bottom: 64px;
+}
+.retro-root ::selection {
+  background: var(--r-navy);
+  color: #fff;
+}
+
+.r-ui {
+  font-family: var(--font-space-grotesk), sans-serif;
+}
+.r-label {
+  font-family: var(--font-courier-prime), "Courier New", monospace;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.r-term {
+  font-family: var(--font-vt323), "Courier New", monospace;
+}
+
+/* Bevels */
+.r-box {
+  background: var(--r-gray);
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+  border-right: 2px solid var(--r-shadow);
+  border-bottom: 2px solid var(--r-shadow);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.45);
+}
+.r-sunken {
+  border-top: 2px solid var(--r-dark);
+  border-left: 2px solid var(--r-dark);
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+}
+.r-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--r-gray);
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+  border-right: 2px solid var(--r-shadow);
+  border-bottom: 2px solid var(--r-shadow);
+  box-shadow: 1px 1px 0 #000;
+  padding: 5px 12px;
+  font-family: var(--font-courier-prime), "Courier New", monospace;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: #000;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.r-btn:hover {
+  background: #d0d4d8;
+}
+.r-btn:active {
+  border-top-color: var(--r-shadow);
+  border-left-color: var(--r-shadow);
+  border-right-color: #fff;
+  border-bottom-color: #fff;
+  transform: translate(1px, 1px);
+}
+.r-btn:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: -5px;
+}
+.r-ctl {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 16px;
+  background: var(--r-gray);
+  border-top: 1px solid #fff;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+  color: #000;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Title bars */
+.r-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 3px 4px 3px 8px;
+  background: linear-gradient(90deg, #000080, #1084d0);
+  color: #fff;
+  font-family: var(--font-courier-prime), "Courier New", monospace;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.03em;
+}
+.r-title--teal {
+  background: linear-gradient(90deg, #006565, #00a8a8);
+}
+.r-title--olive {
+  background: linear-gradient(90deg, #505c2e, #86994e);
+}
+.r-title > span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.r-paper {
+  background: var(--r-paper);
+  color: var(--r-ink);
+}
+
+/* Window menu strip */
+.r-menu {
+  display: flex;
+  gap: 14px;
+  padding: 2px 8px;
+  font-size: 12px;
+  border-bottom: 1px solid var(--r-dark);
+}
+.r-menu span::first-letter {
+  text-decoration: underline;
+}
+
+/* Chips: sunken LED plates */
+.r-chip {
+  display: inline-block;
+  background: #242424;
+  color: var(--r-crt);
+  border-top: 1px solid var(--r-dark);
+  border-left: 1px solid var(--r-dark);
+  border-right: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  padding: 1px 6px;
+  font-family: var(--font-courier-prime), "Courier New", monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+.r-chip--amber {
+  color: var(--r-amber);
+}
+
+/* Stepped BIOS progress bar */
+.r-bar {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  gap: 2px;
+  padding: 2px;
+  background: #fff;
+}
+.r-bar > i {
+  height: 8px;
+  background: #d8d2c2;
+}
+.r-bar > i.on {
+  background: var(--r-teal);
+}
+.r-bar--green > i.on {
+  background: #00860a;
+}
+.r-bar--navy > i.on {
+  background: var(--r-navy);
+}
+
+/* CRT terminal */
+.r-crt {
+  position: relative;
+  background: #0c140c;
+  color: var(--r-crt);
+  box-shadow: inset 0 0 18px rgba(0, 255, 0, 0.2);
+}
+.r-crt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 2;
+}
+.r-crt input,
+.r-crt textarea {
+  width: 100%;
+  background: #050905;
+  color: var(--r-crt);
+  border: 1px solid rgba(51, 255, 51, 0.45);
+  padding: 8px 10px;
+  font-family: var(--font-space-mono), monospace;
+  font-size: 13px;
+  outline: none;
+  position: relative;
+  z-index: 3;
+}
+.r-crt input:focus,
+.r-crt textarea:focus {
+  border-color: var(--r-crt);
+  box-shadow: 0 0 0 1px var(--r-crt);
+}
+.r-crt input::placeholder,
+.r-crt textarea::placeholder {
+  color: rgba(51, 255, 51, 0.4);
+}
+.r-crt .r-btn,
+.r-crt label {
+  position: relative;
+  z-index: 3;
+}
+
+@keyframes r-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.r-cursor {
+  animation: r-blink 1s steps(1) infinite;
+}
+
+/* Database tables */
+.r-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 12px;
+}
+.r-table th {
+  text-align: left;
+  background: var(--r-gray);
+  font-family: var(--font-courier-prime), monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-right: 1px solid var(--r-dark);
+  border-bottom: 1px solid var(--r-dark);
+}
+.r-table td {
+  padding: 3px 8px;
+  border-bottom: 1px dotted #c8c8c8;
+}
+.r-table tr:hover td {
+  background: var(--r-navy);
+  color: #fff;
+}
+.r-table tr:hover td .r-link {
+  color: #fff;
+}
+.r-link {
+  color: var(--r-navy);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Fixed top menu bar and bottom taskbar */
+.r-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+.r-taskbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+}
+
+/* Game previews sit inside an inset bezel; flatten their rounded frames to match. */
+.r-bezel > div {
+  border-radius: 0 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .r-cursor {
+    animation: none;
+  }
+}
+
+/* Grid items may shrink below their content width (long title bars, paths), so nothing pushes the page wider than the screen. */
+.retro-root .grid > * {
+  min-width: 0;
+}
+.retro-root .r-path {
+  overflow-wrap: anywhere;
+}
+
+/* ---- Profile window (reference layout) ---- */
+.r-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ede6d6;
+  border-top: 2px solid var(--r-dark);
+  border-left: 2px solid var(--r-dark);
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  padding: 3px 10px;
+  font-family: var(--font-space-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--r-ink-2);
+}
+.r-headline {
+  font-family: var(--font-space-mono), "Courier New", monospace;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.12;
+  text-transform: uppercase;
+}
+.r-headline mark {
+  background: #2e7d78;
+  color: #fff;
+  padding: 0 0.22em;
+}
+.r-lead {
+  background: #fff;
+  border-left: 4px solid #2e7d78;
+  border-top: 1px solid #d8d2c2;
+  border-bottom: 1px solid #d8d2c2;
+  border-right: 1px solid #d8d2c2;
+}
+.r-btn--lg {
+  padding: 9px 16px;
+  font-size: 13px;
+}
+.r-spec {
+  background: #ede6d6;
+  border-top: 2px solid var(--r-dark);
+  border-left: 2px solid var(--r-dark);
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+}
+
+/* ---- ARCADE.EXE cabinet ---- */
+.r-arcade-screen {
+  animation: r-power-on 0.35s ease-out;
+}
+.r-arcade-screen > div {
+  border-radius: 0 !important;
+}
+.r-arcade-scan {
+  background: linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.14) 50%);
+  background-size: 100% 4px;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.45);
+}
+@keyframes r-power-on {
+  from {
+    opacity: 0;
+    transform: scaleY(0.04);
+    filter: brightness(2.2);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+    filter: brightness(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .r-arcade-screen {
+    animation: none;
+  }
+}
+
+/* ---- MS-DOS prompt input ---- */
+.r-crt input.r-dos-input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: #fff;
+  caret-color: var(--r-crt);
+  box-shadow: none;
+}
+.r-crt input.r-dos-input:focus {
+  box-shadow: none;
+}
+
+/* ---- Wallpapers (Display menu) ---- */
+.retro-root[data-wallpaper="navy"] {
+  background-color: #0a1a5c;
+}
+.retro-root[data-wallpaper="plum"] {
+  background-color: #5a2a5e;
+}
+.retro-root[data-wallpaper="crt"] {
+  background-color: #0c140c;
+  background-image: radial-gradient(rgba(51, 255, 51, 0.12) 1px, transparent 1px);
+}
+
+/* ---- Boot screen ---- */
+.r-boot {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: #050905;
+  padding: 24px;
+  transition: opacity 0.25s ease;
+}
+.r-boot--fade {
+  opacity: 0;
+}
+html[data-maos-booted] .r-boot {
+  display: none;
+}
+.r-boot-line {
+  opacity: 0;
+  animation: r-boot-line 0.01s linear forwards;
+}
+@keyframes r-boot-line {
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .r-boot {
+    display: none;
+  }
+}
+
+/* Next.js's dev-mode "N" badge sits on top of the Start button; hide it (it never appears in production). */
+body:has(.retro-root) nextjs-portal {
+  display: none !important;
+}
+
+/* ---- Pixel cursors (arrow, pointing hand, hourglass while loading) ---- */
+.retro-root {
+  cursor: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='22'%20height='34'%20viewBox='0%200%2011%2017'%20shape-rendering='crispEdges'%3E%3Crect%20x='0'%20y='0'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='0'%20y='1'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='1'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='0'%20y='2'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='2'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='2'%20y='2'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='0'%20y='3'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='3'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='2'%20y='3'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='3'%20y='3'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='0'%20y='4'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='4'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='2'%20y='4'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='3'%20y='4'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='4'%20y='4'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='0'%20y='5'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='5'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='2'%20y='5'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='3'%20y='5'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='4'%20y='5'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='5'%20y='5'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='0'%20y='6'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='6'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='2'%20y='6'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='3'%20y='6'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='4'%20y='6'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='5'%20y='6'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='6'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='0'%20y='7'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='7'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='2'%20y='7'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='3'%20y='7'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='4'%20y='7'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='5'%20y='7'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='7'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='7'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='0'%20y='8'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='8'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='2'%20y='8'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='3'%20y='8'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='4'%20y='8'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='5'%20y='8'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='8'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='8'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='8'%20y='8'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='0'%20y='9'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='2'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='3'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='4'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='5'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='8'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='9'%20y='9'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='0'%20y='10'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='10'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='2'%20y='10'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='3'%20y='10'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='4'%20y='10'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='5'%20y='10'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='10'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='10'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='8'%20y='10'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='9'%20y='10'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='10'%20y='10'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='0'%20y='11'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='11'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='2'%20y='11'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='3'%20y='11'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='11'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='5'%20y='11'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='11'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='0'%20y='12'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='12'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='2'%20y='12'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='12'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='12'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='12'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='12'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='0'%20y='13'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='13'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='13'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='13'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='13'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='13'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='0'%20y='14'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='14'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='14'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='14'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='8'%20y='14'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='15'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='15'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='15'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='8'%20y='15'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='16'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='16'%20width='1'%20height='1'%20fill='%23000'/%3E%3C/svg%3E") 0 0, auto;
+}
+.retro-root a,
+.retro-root button,
+.retro-root [role="tab"],
+.retro-root label:has(input[type="checkbox"]) {
+  cursor: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='28'%20height='34'%20viewBox='0%200%2014%2017'%20shape-rendering='crispEdges'%3E%3Crect%20x='5'%20y='0'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='0'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='1'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='1'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='1'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='1'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='2'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='2'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='2'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='2'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='3'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='3'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='3'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='3'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='4'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='4'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='4'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='4'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='8'%20y='4'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='9'%20y='4'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='5'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='5'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='5'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='5'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='8'%20y='5'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='9'%20y='5'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='10'%20y='5'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='11'%20y='5'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='6'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='6'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='6'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='6'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='8'%20y='6'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='9'%20y='6'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='10'%20y='6'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='11'%20y='6'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='12'%20y='6'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='7'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='7'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='7'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='7'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='7'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='7'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='8'%20y='7'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='9'%20y='7'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='10'%20y='7'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='11'%20y='7'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='12'%20y='7'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='13'%20y='7'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='0'%20y='8'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='8'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='2'%20y='8'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='3'%20y='8'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='8'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='8'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='8'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='8'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='8'%20y='8'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='9'%20y='8'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='10'%20y='8'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='11'%20y='8'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='12'%20y='8'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='13'%20y='8'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='0'%20y='9'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='2'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='3'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='4'%20y='9'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='8'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='9'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='10'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='11'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='12'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='13'%20y='9'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='10'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='10'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='3'%20y='10'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='4'%20y='10'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='5'%20y='10'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='10'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='10'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='8'%20y='10'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='9'%20y='10'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='10'%20y='10'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='11'%20y='10'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='12'%20y='10'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='13'%20y='10'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='11'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='3'%20y='11'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='4'%20y='11'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='5'%20y='11'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='11'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='11'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='8'%20y='11'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='9'%20y='11'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='10'%20y='11'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='11'%20y='11'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='12'%20y='11'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='13'%20y='11'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='12'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='3'%20y='12'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='4'%20y='12'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='5'%20y='12'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='12'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='12'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='8'%20y='12'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='9'%20y='12'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='10'%20y='12'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='11'%20y='12'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='12'%20y='12'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='3'%20y='13'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='13'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='5'%20y='13'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='13'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='13'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='8'%20y='13'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='9'%20y='13'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='10'%20y='13'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='11'%20y='13'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='12'%20y='13'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='14'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='14'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='14'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='14'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='8'%20y='14'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='9'%20y='14'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='10'%20y='14'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='11'%20y='14'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='15'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='15'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='15'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='15'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='8'%20y='15'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='9'%20y='15'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='10'%20y='15'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='11'%20y='15'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='16'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='16'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='16'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='16'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='8'%20y='16'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='9'%20y='16'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='10'%20y='16'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='11'%20y='16'%20width='1'%20height='1'%20fill='%23000'/%3E%3C/svg%3E") 9 0, pointer !important;
+}
+.retro-root input,
+.retro-root textarea {
+  cursor: text !important;
+}
+.retro-root:not([data-ready]),
+.retro-root:not([data-ready]) * {
+  cursor: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='22'%20height='22'%20viewBox='0%200%2011%2011'%20shape-rendering='crispEdges'%3E%3Crect%20x='0'%20y='0'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='0'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='0'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='3'%20y='0'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='0'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='0'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='0'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='0'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='8'%20y='0'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='9'%20y='0'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='10'%20y='0'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='0'%20y='1'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='1'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='2'%20y='1'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='3'%20y='1'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='4'%20y='1'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='5'%20y='1'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='1'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='1'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='8'%20y='1'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='9'%20y='1'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='10'%20y='1'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='2'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='2'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='3'%20y='2'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='4'%20y='2'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='5'%20y='2'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='2'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='2'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='8'%20y='2'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='9'%20y='2'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='3'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='3'%20y='3'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='4'%20y='3'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='3'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='3'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='3'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='8'%20y='3'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='3'%20y='4'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='4'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='5'%20y='4'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='4'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='4'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='5'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='5'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='5'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='3'%20y='6'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='6'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='5'%20y='6'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='6'%20y='6'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='6'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='7'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='3'%20y='7'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='4'%20y='7'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='5'%20y='7'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='7'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='7'%20y='7'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='8'%20y='7'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='8'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='8'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='3'%20y='8'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='8'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='8'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='8'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='8'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='8'%20y='8'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='9'%20y='8'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='0'%20y='9'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='2'%20y='9'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='3'%20y='9'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='9'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='9'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='9'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='9'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='8'%20y='9'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='9'%20y='9'%20width='1'%20height='1'%20fill='%23fff'/%3E%3Crect%20x='10'%20y='9'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='0'%20y='10'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='1'%20y='10'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='2'%20y='10'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='3'%20y='10'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='4'%20y='10'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='5'%20y='10'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='6'%20y='10'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='7'%20y='10'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='8'%20y='10'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='9'%20y='10'%20width='1'%20height='1'%20fill='%23000'/%3E%3Crect%20x='10'%20y='10'%20width='1'%20height='1'%20fill='%23000'/%3E%3C/svg%3E") 11 11, wait !important;
+}
+
+/* ---- DOS quick-command chips ---- */
+.r-dos-chip {
+  border: 1px solid rgba(51, 255, 51, 0.5);
+  background: rgba(51, 255, 51, 0.06);
+  color: var(--r-crt);
+  padding: 1px 8px;
+  font-family: var(--font-courier-prime), monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+.r-dos-chip:hover,
+.r-dos-chip:focus-visible {
+  background: var(--r-crt);
+  color: #051005;
+  outline: none;
+}
+
+/* ---- CRT night mode: the whole desktop goes phosphor green ---- */
+.retro-root[data-wallpaper="crt"] {
+  --r-gray: #10200f;
+  --r-paper: #0b150b;
+  --r-ink: #b6ffb6;
+  --r-ink-2: #8fdc8f;
+  color: #b6ffb6;
+}
+.retro-root[data-wallpaper="crt"]::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  background: linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.18) 50%);
+  background-size: 100% 3px;
+  box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.6);
+}
+.retro-root[data-wallpaper="crt"] .r-box,
+.retro-root[data-wallpaper="crt"] .r-btn,
+.retro-root[data-wallpaper="crt"] .r-ctl {
+  background-color: #10200f;
+  color: #7dff7d;
+  border-top-color: #3d7a3d;
+  border-left-color: #3d7a3d;
+  border-right-color: #020802;
+  border-bottom-color: #020802;
+}
+.retro-root[data-wallpaper="crt"] .r-btn:hover {
+  background-color: #1a331a;
+}
+.retro-root[data-wallpaper="crt"] .r-title {
+  background: linear-gradient(90deg, #0d3a0d, #1f7a1f);
+  color: #d8ffd8;
+}
+.retro-root[data-wallpaper="crt"] .r-sunken,
+.retro-root[data-wallpaper="crt"] .r-pill,
+.retro-root[data-wallpaper="crt"] .r-spec,
+.retro-root[data-wallpaper="crt"] .r-seg {
+  border-top-color: #020802;
+  border-left-color: #020802;
+  border-right-color: #3d7a3d;
+  border-bottom-color: #3d7a3d;
+}
+.retro-root[data-wallpaper="crt"] .r-paper,
+.retro-root[data-wallpaper="crt"] .r-lead,
+.retro-root[data-wallpaper="crt"] .r-pill,
+.retro-root[data-wallpaper="crt"] .r-spec,
+.retro-root[data-wallpaper="crt"] .bg-white,
+.retro-root[data-wallpaper="crt"] .bg-\[\#ede6d6\],
+.retro-root[data-wallpaper="crt"] .bg-\[\#c0c0c0\],
+.retro-root[data-wallpaper="crt"] .r-table,
+.retro-root[data-wallpaper="crt"] .r-table th {
+  background-color: #0b150b !important;
+  color: #b6ffb6;
+}
+.retro-root[data-wallpaper="crt"] .r-lead {
+  border-color: #1f4d1f;
+  border-left-color: #33ff33;
+}
+.retro-root[data-wallpaper="crt"] .r-paper [class*="text-[#"],
+.retro-root[data-wallpaper="crt"] .r-box > .r-paper [class*="text-[#"],
+.retro-root[data-wallpaper="crt"] .r-table td,
+.retro-root[data-wallpaper="crt"] .r-link {
+  color: #7dff7d !important;
+}
+.retro-root[data-wallpaper="crt"] .r-headline mark {
+  background: #1f7a1f;
+  color: #eaffea;
+}
+.retro-root[data-wallpaper="crt"] .r-table th,
+.retro-root[data-wallpaper="crt"] .r-table td {
+  border-color: #1f4d1f;
+}
+.retro-root[data-wallpaper="crt"] .r-table tr:hover td {
+  background: #1f7a1f;
+  color: #eaffea !important;
+}
+.retro-root[data-wallpaper="crt"] .r-menu {
+  border-color: #1f4d1f;
+}
+.retro-root[data-wallpaper="crt"] .r-bar > i,
+.retro-root[data-wallpaper="crt"] .r-bar {
+  background-color: #0b150b;
+}
+.retro-root[data-wallpaper="crt"] .r-bar > i.on {
+  background: #33ff33;
+}
+.retro-root[data-wallpaper="crt"] [role="menu"] .bg-\[\#000080\] {
+  background: #1f7a1f !important;
+}

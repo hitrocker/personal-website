@@ -1,7 +1,7 @@
 "use client";
 
-import { Reveal } from "@/components/ui/reveal";
-import { SectionHeading } from "@/components/ui/section-heading";
+import { Reveal } from "@/designs/classic/components/ui/reveal";
+import { SectionHeading } from "@/designs/classic/components/ui/section-heading";
 import { skillGroups } from "@/lib/content";
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";

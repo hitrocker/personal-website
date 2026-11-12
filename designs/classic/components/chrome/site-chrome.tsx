@@ -1,6 +1,6 @@
 "use client";
 
-import { AmbientField } from "@/components/chrome/ambient-field";
+import { AmbientField } from "@/designs/classic/components/chrome/ambient-field";
 import { useEffect, useRef, useState } from "react";
 
 export function SiteChrome() {

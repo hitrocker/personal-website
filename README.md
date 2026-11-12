@@ -12,6 +12,21 @@ Live: [https://hitrocker.dev](https://hitrocker.dev)
 - Framer Motion
 - Lucide icons
 
+## Project structure
+
+```
+app/                  Next.js routes: serves the MA/OS design at /
+designs/
+  retro/              MA/OS, the live retro-desktop design (see designs/retro/README.md)
+  classic/            Previous dark design, archived and not routed (see designs/classic/README.md)
+components/           Shared by both designs: game previews, JSON-LD structured data
+lib/                  Shared content (content.ts) and site config (site.ts)
+cv/                   Source for the downloadable CV (resume.html, build.sh)
+public/               Static files, including Muhammad_Ahmed_CV.pdf
+```
+
+All on-site text lives in `lib/content.ts`.
+
 ## Local development
 
 ```bash
