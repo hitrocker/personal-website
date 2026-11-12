@@ -432,7 +432,7 @@ export function MazeVisual() {
   return (
     <div
       ref={rootRef}
-      className={`flex ${PREVIEW_FRAME} items-center justify-center`}
+      className={`flex ${PREVIEW_FRAME} items-center justify-center overflow-hidden`}
       style={{ background: "#252B32" }}
       aria-hidden="true"
     >
