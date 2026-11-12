@@ -1,0 +1,117 @@
+<!doctype html>
+<!--
+  Source for public/Muhammad_Ahmed_CV.pdf. Regenerate with:  npm run cv
+  Kept deliberately ATS-friendly: one column, standard section headings,
+  real text (no images/icons/tables), plain bullets, consistent dates, visible URLs.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Muhammad Ahmed - Resume</title>
+<style>
+  @page { size: Letter; margin: 0.45in 0.55in; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9.8pt;
+    line-height: 1.3;
+    color: #111;
+  }
+  a { color: inherit; text-decoration: none; }
+  h1 { font-size: 19pt; margin: 0; letter-spacing: 0.2px; text-align: center; }
+  .title { text-align: center; font-size: 10.5pt; margin: 2px 0 3px; }
+  .contact { text-align: center; font-size: 9pt; margin: 0; }
+  h2 {
+    font-size: 10.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border-bottom: 1px solid #111;
+    padding-bottom: 1px;
+    margin: 9px 0 4px;
+  }
+  .row { display: flex; justify-content: space-between; gap: 12px; margin-top: 5px; }
+  .row:first-of-type { margin-top: 0; }
+  .row .left { font-weight: bold; }
+  .row .right { white-space: nowrap; }
+  ul { margin: 2px 0 0; padding-left: 15px; }
+  li { margin: 1px 0; }
+  p { margin: 0; }
+  .skills p { margin: 1px 0; }
+</style>
+</head>
+<body>
+
+<h1>Muhammad Ahmed</h1>
+<p class="title">LLM Engineer | Software Developer</p>
+<p class="contact">
+  Lahore, Pakistan | iahmedzahooor@gmail.com | +92 306 3398566<br>
+  <a href="https://hitrocker.dev">hitrocker.dev</a> |
+  <a href="https://www.linkedin.com/in/muhammad-ahmed-4500012b1/">linkedin.com/in/muhammad-ahmed-4500012b1</a> |
+  <a href="https://github.com/hitrocker">github.com/hitrocker</a>
+</p>
+
+<h2>Summary</h2>
+<p>
+  LLM Engineer and software developer with two years of experience evaluating frontier models from OpenAI,
+  Anthropic, and Google through RLHF, benchmarking, reasoning analysis, and AI-generated code review at Revelo
+  and Turing. Independently designed, built, tested, and published four mobile games on Google Play using
+  Unity, C#, Kotlin, Jetpack Compose, and Firebase.
+</p>
+
+<h2>Experience</h2>
+<div class="row"><span class="left">LLM Engineer (AI Evaluation), Revelo</span><span class="right">Feb 2026 – Present</span></div>
+<ul>
+  <li>Evaluate how Anthropic's frontier models handle complex logic and follow strict instruction-following constraints.</li>
+  <li>Review AI-generated code changes in PR Writer workflows for safety, readability, and correct exception handling.</li>
+  <li>Run head-to-head model comparisons and write targeted feedback that reduces model hallucinations.</li>
+</ul>
+
+<div class="row"><span class="left">LLM Projects, Turing</span><span class="right">Nov 2024 – Jan 2026</span></div>
+<ul>
+  <li>Trained and benchmarked large language models across OpenAI, Anthropic, and Google families using RLHF.</li>
+  <li>Tested output quality for multi-step reasoning, truthfulness, and instruction following.</li>
+  <li>Contributed to SEW Bench evaluations, video captioning tasks, and offline workflow improvements.</li>
+  <li>Streamlined data collection pipelines to process large datasets quickly while keeping evaluation standards strict.</li>
+  <li>Coordinated daily operations with international teammates to hit model accuracy targets on schedule.</li>
+</ul>
+
+<h2>Projects</h2>
+<div class="row"><span class="left">Arrow Puzzle | Unity, C#, Firebase</span><span class="right"><a href="https://play.google.com/store/apps/details?id=com.hitrocker.arrowpuzzle">Google Play</a></span></div>
+<ul>
+  <li>Built a mobile puzzle game with 2,785 campaign levels and a deterministic, seeded level generator for endless play.</li>
+  <li>Implemented Google Sign-In with Firebase Auth, Cloud Firestore leaderboards behind security rules, a cross-device synced coin economy, and Unity EditMode tests.</li>
+</ul>
+
+<div class="row"><span class="left">Sky Hopper | Unity 6, C#, Firebase</span><span class="right"><a href="https://play.google.com/store/apps/details?id=com.hitrocker.skyhopper">Google Play</a></span></div>
+<ul>
+  <li>Built an original one-tap arcade game with sprites, sounds, and scenes generated from code at build time.</li>
+  <li>Added Firebase Auth (Google and guest), a Cloud Firestore leaderboard, and in-app account deletion; 15 EditMode and PlayMode tests pass.</li>
+</ul>
+
+<div class="row"><span class="left">PaintMaze | Unity, C#, Firebase</span><span class="right"><a href="https://play.google.com/store/apps/details?id=com.hitrocker.paintmaze">Google Play</a> | <a href="https://github.com/hitrocker/Gamepaintmaze">GitHub</a></span></div>
+<ul>
+  <li>Created a puzzle game with 6,500 pre-baked levels plus on-device generation for offline play.</li>
+  <li>Engineered a custom board solver for hints and layout verification, a cache that removes loading screens, and Firebase Auth cloud saves and leaderboards.</li>
+</ul>
+
+<div class="row"><span class="left">2048 | Kotlin, Jetpack Compose, Firebase</span><span class="right"><a href="https://github.com/hitrocker/Game2048">GitHub</a></span></div>
+<ul>
+  <li>Developed a custom engine with 8 grid sizes (24 JUnit tests), gesture controls, and DataStore persistence.</li>
+  <li>Linked Firebase Auth to real-time Cloud Firestore leaderboards and published a signed AAB on Google Play.</li>
+</ul>
+
+<h2>Education</h2>
+<div class="row"><span class="left">BS Information Technology, Bahria University, Lahore</span><span class="right">2023 – 2027 (expected)</span></div>
+
+<h2>Skills</h2>
+<div class="skills">
+  <p><b>AI &amp; Machine Learning:</b> RLHF, LLM Evaluation, Model Benchmarking, Prompt Engineering, Multimodal Annotation, PyTorch, CNNs, Vision Transformers</p>
+  <p><b>Programming Languages:</b> Python, C#, Kotlin, JavaScript, C++, SQL</p>
+  <p><b>Mobile &amp; Game Development:</b> Unity, Jetpack Compose, Android Studio, MVVM, StateFlow, DataStore, Google Play</p>
+  <p><b>Backend &amp; Cloud:</b> Firebase Authentication, Cloud Firestore, PostgreSQL, SQL Server, Docker</p>
+  <p><b>Testing &amp; Tools:</b> JUnit, Unity Test Framework, Git, GitHub, Gradle, VS Code, Cursor, Kaggle, Apache JMeter, Graphviz</p>
+</div>
+
+</body>
+</html>

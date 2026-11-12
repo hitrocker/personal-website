@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useInView, useReducedMotion } from "framer-motion";
+import Image from "next/image";
 import { useEffect, useRef, useState, type RefObject } from "react";
 
 type Dir = "left" | "right" | "up" | "down";
@@ -480,6 +481,18 @@ export function MazeVisual() {
             boxShadow: "0 3px 0 rgba(0,0,0,0.18)",
           }}
         />
+      </div>
+    </div>
+  );
+}
+
+export function ScreenshotVisual({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div
+      className={`${PREVIEW_FRAME} relative grid place-items-center overflow-hidden border border-[var(--line)] bg-[color-mix(in_srgb,var(--elev)_70%,transparent)] p-6`}
+    >
+      <div className="relative h-full aspect-[9/16] overflow-hidden rounded-[1.6rem] border-[6px] border-[#111214] shadow-[0_24px_60px_-20px_rgba(0,0,0,0.6)]">
+        <Image src={src} alt={alt} fill sizes="(min-width: 1024px) 280px, 60vw" className="object-cover" />
       </div>
     </div>
   );
