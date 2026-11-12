@@ -169,7 +169,9 @@ export type Project = {
   name: string;
   kind: string;
   role: string;
-  visual: "grid2048" | "maze";
+  visual: "grid2048" | "maze" | "screenshot";
+  /** Phone screenshot shown when visual is "screenshot" (portrait, 9:16). */
+  image?: { src: string; alt: string };
   summary: string;
   highlights: string[];
   stack: string[];
@@ -233,6 +235,73 @@ export const projects: Project[] = [
       {
         label: "Play Store",
         href: "https://play.google.com/store/apps/details?id=com.hitrocker.paintmaze&pcampaignid=web_share",
+      },
+    ],
+  },
+  {
+    id: "arrow-puzzle",
+    name: "Arrow Puzzle",
+    kind: "Unity mobile puzzle",
+    role: "Solo developer · shipped",
+    visual: "screenshot",
+    image: {
+      src: "/projects/arrow-puzzle.webp",
+      alt: "Arrow Puzzle gameplay: level 23, a maze of pink arrows on a cream board",
+    },
+    summary:
+      "A tap-to-clear arrow puzzle in Unity and C# - 2,785 bundled levels, then a seeded generator that keeps building bigger boards with no end.",
+    highlights: [
+      "2,785 campaign levels, followed by a deterministic level generator that scales board size and arrow count.",
+      "Procedural arrow meshes and theme palettes, with gesture input tuned for small screens.",
+      "Coin economy with daily free hints and timed retry regeneration, synced and merged across devices.",
+      "Google Sign-In through Firebase Auth, Firestore leaderboards behind security rules, and EditMode tests for level rules, gestures, and the economy.",
+    ],
+    stack: [
+      "Unity 6",
+      "C#",
+      "Firebase Auth",
+      "Google Sign-In",
+      "Cloud Firestore",
+      "Unity Test Framework",
+    ],
+    links: [
+      {
+        label: "Play Store",
+        href: "https://play.google.com/store/apps/details?id=com.hitrocker.arrowpuzzle",
+      },
+    ],
+  },
+  {
+    id: "sky-hopper",
+    name: "Sky Hopper",
+    kind: "Unity arcade game",
+    role: "Solo developer · shipped",
+    visual: "screenshot",
+    image: {
+      src: "/projects/sky-hopper.webp",
+      alt: "Sky Hopper home screen: a pixel-art bird over a city skyline with Play and Settings buttons",
+    },
+    summary:
+      "An original one-tap arcade game in Unity 6 - pixel art and sound effects generated in code, a tuned difficulty curve, and a global leaderboard.",
+    highlights: [
+      "Sprites, sounds, prefabs, and both scenes are generated from code by a one-click editor build step.",
+      "Difficulty curve ramps speed, gap height, and spacing over the first 20 points; day/night skies, parallax, and haptics.",
+      "Google or guest sign-in via Firebase Auth REST, a Cloud Firestore leaderboard, and in-app account deletion.",
+      "15 automated tests (6 EditMode, 9 PlayMode), all passing; shipped as a signed IL2CPP ARM64 build on Google Play.",
+    ],
+    stack: [
+      "Unity 6",
+      "C#",
+      "2D URP",
+      "Input System",
+      "Firebase Auth",
+      "Cloud Firestore",
+      "PlayMode tests",
+    ],
+    links: [
+      {
+        label: "Play Store",
+        href: "https://play.google.com/store/apps/details?id=com.hitrocker.skyhopper",
       },
     ],
   },
