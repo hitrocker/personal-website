@@ -144,7 +144,7 @@ export function Contact() {
 
         <Reveal delay={0.06}>
           <div className="card grid gap-3 p-7">
-            <p className="font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
+            <p className="font-mono text-xs tracking-[0.14em] text-muted uppercase">
               Direct
             </p>
             <div className="flex items-center gap-2">

@@ -8,7 +8,7 @@ export function Marquee() {
         {items.map((item, index) => (
           <span
             key={`${item}-${index}`}
-            className="display text-lg tracking-[-0.03em] text-[color-mix(in_srgb,var(--ink)_55%,transparent)] uppercase"
+            className="display text-lg tracking-[-0.03em] text-[color-mix(in_srgb,var(--ink)_72%,transparent)] uppercase"
           >
             {item}
           </span>
